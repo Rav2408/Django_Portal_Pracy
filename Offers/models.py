@@ -2,6 +2,9 @@ from django.db import models
 
 # ctrl + alt + shift + l
 # Create your models here.
+from django.db.models import DO_NOTHING
+
+
 class User(models.Model):
     username = models.CharField(('username'), max_length=20, blank=False)
     password = models.CharField(('password'), max_length=30, blank=False)
@@ -34,6 +37,6 @@ class Offer(models.Model):
     description = models.TextField(blank=True)
 
 class Application(models.Model):
-    offer = models.OneToOneField(Offer) #on_delete
-    user = models.OneToOneField(User)
+    offer = models.OneToOneField(Offer, on_delete=DO_NOTHING) #on_delete
+    user = models.OneToOneField(User, on_delete=DO_NOTHING)
     response = models.CharField(('response'), max_length=50, blank=True)
