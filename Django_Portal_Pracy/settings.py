@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'Django_Portal_Pracy.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fjqwduqu',
+        'USER': 'fjqwduqu',
+        'PASSWORD': '8HctFoeJknN5VodK6_BL8S4QO4eP9D5M',
+        'HOST': 'rogue.db.elephantsql.com',
+        'PORT': '5432',
     }
 }
 
