@@ -7,7 +7,7 @@ class User(models.Model):
     password = models.CharField(('password'), max_length=30, blank=False)
     first_name = models.CharField(('first name'), max_length=30, blank=False)
     last_name = models.CharField(('last name'), max_length=30, blank=False)
-    email = models.EmailField(_('email address'), blank=True)
+    email = models.EmailField(('email address'), blank=True)
     cv = models.FileField(upload_to='uploads/')
     social_links = models.URLField(null=True)
 
@@ -20,7 +20,7 @@ class Company(models.Model):
     street_number = models.IntegerField(blank=False)
     postcode = models.CharField(('postcode'), max_length=6, blank=False)
     suite_number = models.IntegerField(blank=True)
-    email = models.EmailField(_('email address'), blank=False)
+    email = models.EmailField(('email address'), blank=False)
     social_links = models.URLField(null=True)
     logo = models.ImageField(upload_to = "logo/", null=True, default=None)
 
