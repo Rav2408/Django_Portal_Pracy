@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User as DefaultUser
 
 # ctrl + alt + shift + l
 # Create your models here.
@@ -7,11 +7,12 @@ from django.db.models import DO_NOTHING
 
 
 class User(models.Model):
-    username = models.CharField(('username'), max_length=20, blank=False)
-    password = models.CharField(('password'), max_length=30, blank=False)
-    first_name = models.CharField(('first name'), max_length=30, blank=False)
-    last_name = models.CharField(('last name'), max_length=30, blank=False)
-    email = models.EmailField(('email address'), blank=True)
+    user = models.OneToOneField(DefaultUser, on_delete=models.CASCADE)
+    # username = models.CharField(('username'), max_length=20, blank=False)
+    # password = models.CharField(('password'), max_length=30, blank=False)
+    # first_name = models.CharField(('first name'), max_length=30, blank=False)
+    # last_name = models.CharField(('last name'), max_length=30, blank=False)
+    # email = models.EmailField(('email address'), blank=True)
     cv = models.FileField(upload_to='uploads/')
     social_links = models.URLField(null=True, blank=True)
 
