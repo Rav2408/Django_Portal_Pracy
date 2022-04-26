@@ -8,7 +8,7 @@ from .models import User, Company, Offer, Application
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'first_name', 'last_name']
+    list_display = []
 
 
 @admin.register(Company)
