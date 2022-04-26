@@ -1,0 +1,45 @@
+Troje dzielnych muszkieterów rusza w świat, aby rozpocząć prace z Django oraz zmierzyć się z przeciwnościami losu. Czy uda im się ukończyć ten projekt na czas? Przekonajmy się!
+
+Portal pracy
+Aplikacja ma słuzyc firmom poszukujacym nowych pracowników oraz osobom poszukujacym pracy.
+Podstawowe funkcje aplikacji: zgłaszanie ofert przez firmy (formularz z parametrami oferty, np. branza,
+zawód, stanowisko), okreslenie formularza odpowiedzi na oferte, tzn. jakich informacji o osobie zainteresowanej
+oferta firma potrzebuje (np. wiek, rodzaj wykształcenia, miejsce zamieszkania, staz), przegladanie
+ofert z mozliwoscia ich filtrowania, odpowiadanie na oferte (wypelnienie formularza odpowiedzi).
+projekt dla grupy maksymalnie 3-osobowej
+
+Spotyamy się o 9:30
+
+Do zrobienia na najbliższe zajęcia:
+Projekt bazy danych.
+
+
+Projekt bazy danych:
+- najprawdopodobniej postgresql
+- ogarnąć postgresa z Django
+-
+
+Plan:
+
+
+
+1. Strona główna
+    - Sign in,
+    - Sign up osobny dla specjalisty i pracodawcy
+    - Sztampowy tekst, lorem ipsum - o nas
+2. Strona użytkownika po zalogowaniu
+    - dodanie i edycja danych osobowych (nie możesz aplikować bez zalogowania się)
+3. Strona firmy i jej panel aministracyjny
+    - dodawanie ofert i ich opisu (przez formularz)
+    - opis firmy
+4. Strona do wyszukiwania ofert (zastanowić się jak rozwiązać- zalogowany/niezalogowany użytkownik)
+    - filtrowanie (miejsce, zarobki, zawód, firma)
+    - sortowanie (zarobki, data)
+(5. Strona do wypełniania formularza aplikacji na ofertę)? (autouzupełnianie)
+    - podstawowe daneuz
+    - CV
+
+//Pomysł, żeby niezalogowany użytkownik musiał wypełnić formularz do aplikacji na ofertę,
+a zalogowany tylko klikał aplikuj i jego dane z konta będą wysyłane.
+
+Modele:
