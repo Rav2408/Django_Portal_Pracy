@@ -11,13 +11,11 @@ projekt dla grupy maksymalnie 3-osobowej
 Spotyamy się o 9:30
 
 Do zrobienia na najbliższe zajęcia:
-Projekt bazy danych.
+Pierwsza strona backend + frontend
 
-
-Projekt bazy danych:
-- najprawdopodobniej postgresql
-- ogarnąć postgresa z Django
--
+TODO:
+User dziedziczy ze podstawowego usera
+Ogarnięcie linków
 
 Plan:
 
@@ -42,4 +40,3 @@ Plan:
 //Pomysł, żeby niezalogowany użytkownik musiał wypełnić formularz do aplikacji na ofertę,
 a zalogowany tylko klikał aplikuj i jego dane z konta będą wysyłane.
 
-Modele:
