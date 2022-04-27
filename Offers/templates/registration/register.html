@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
+{% extends 'Offers/base.html' %}
+{% load static %}
+{% block head %}
+    <title>Zarejestruj się</title>
+    <link rel="stylesheet" href="{% static 'login.css' %}" />
+{% endblock %}
 
-
-  <form method="post" action="{% url 'register' %}">
+{% block body %}
+  <form id="register" method="post" action="{% url 'register' %}">
       {% csrf_token %}
 
         {% if form.errors %}
@@ -19,6 +18,4 @@
       <p><input type="submit"  value="Register"></p>
       <input type="hidden" name="next" value="{{ next }}">
   </form>
-  <p>rejestrowanko</p>
-</body>
-</html>
+{% endblock %}

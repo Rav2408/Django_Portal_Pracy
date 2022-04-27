@@ -1,8 +1,10 @@
 {% extends 'Offers/base.html' %}
-
+{% load static %}
 {% block head %}
-    <title>Login</title>
+    <title>Zaloguj się</title>
+    <link rel="stylesheet" href="{% static 'login.css' %}" />
 {% endblock %}
+
 
 {% block body %}
   {% if form.errors %}
@@ -13,7 +15,7 @@
   <p>Brak dostępu</p>
   {% endif %}
 
-  <form method="post" action="{% url 'login' %}">
+  <form id="login" method="post" action="{% url 'login' %}">
       {% csrf_token %}
 
       <p>Login: {{ form.username }}</p>
