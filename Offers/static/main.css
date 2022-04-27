@@ -1,0 +1,36 @@
+body{
+  background-color: darkgray;
+}
+#upper{
+  text-align: right;
+  width: 100%;
+  color: black;
+  background-color: lightblue;
+  float: top;
+  border-radius: 20px;
+  border: 2px solid yellowgreen;
+}
+#login{
+  padding-right: 10px;
+  vertical-align: center;
+}
+#title{
+  padding-left: 10px;
+  text-align: left;
+  float:left;
+}
+
+h1{
+  font-size: 30px;
+}
+#lower{
+  float: bottom;
+  width: 100%;
+  height: 7%;
+  padding-right: 10px;
+  text-align: right;
+  background-color: lightblue;
+  position:fixed;
+  bottom:0;
+  right:0;
+}

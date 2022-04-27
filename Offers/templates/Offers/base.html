@@ -1,19 +1,12 @@
+{% load static %}
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Portal Pracy</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'main.css' %}" />
+    {% block head %}{% endblock %}
 </head>
-
 <body>
-    <h1>Portal Pracy</h1>
-    {% if user.is_authenticated %}
-    <h3>Yor name is: {{user.username}}</h3>
-    <a class="btn btn-primary" href="/accounts/logout/">Logout!</a>
-    {% else %}
-    <h3>Yor are not logged in.</h3>
-    <a class="btn btn-primary" href="/accounts/login/">Login!</a>
-    {% endif %}
-    <p>Base Template z którego będą dziedziczyły inne strony</p>
-
+{% block body %}{% endblock %}
 </body>
-
 </html>

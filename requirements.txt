@@ -1,2 +1,4 @@
 psycopg2==2.9.3
 Pillow==9.1.0
+django-livereload-server==0.4
+

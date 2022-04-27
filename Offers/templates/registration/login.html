@@ -1,27 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends 'Offers/base.html' %}
+
+{% block head %}
     <title>Login</title>
-</head>
-<body>
+{% endblock %}
+
+{% block body %}
   {% if form.errors %}
-  <p>jakieś błędy</p>
+  <p>Nieprawidłowe dane</p>
   {% endif %}
 
   {% if next %}
-  <p>brak dostępu</p>
+  <p>Brak dostępu</p>
   {% endif %}
 
   <form method="post" action="{% url 'login' %}">
       {% csrf_token %}
 
-      <p>Username: {{ form.username }}</p>
-      <p>Password: {{ form.password }}</p>
+      <p>Login: {{ form.username }}</p>
+      <p>Hasło: {{ form.password }}</p>
 
-      <p><input type="submit"  value="login"></p>
+      <p><input type="submit"  value="Zaloguj"></p>
       <input type="hidden" name="next" value="{{ next }}">
   </form>
-  <p>logowanko</p>
-</body>
-</html>
+{% endblock %}

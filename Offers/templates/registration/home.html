@@ -1,1 +1,26 @@
 {% extends 'Offers/base.html' %}
+{% load static %}
+{% block head %}
+    <meta charset="utf-8">
+    <title>Portal Pracy</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}" />
+{% endblock %}
+
+{% block body %}
+    <div id="upper">
+        <h1 id="title">Portal Pracy</h1>
+        <div id="login">
+            {% if user.is_authenticated %}
+            <p>Zalogowano jako <b>{{user.username}}</b></p>
+            <a class="btn btn-primary" href="/accounts/logout/">Wyloguj</a>
+            {% else %}
+            <p>Nie jesteś zalogowany/a.</p>
+            <a class="btn btn-primary" href="/accounts/login/">Zaloguj się</a>
+            <a class="btn btn-primary" href="/register/">Zarejestruj się</a>
+            {% endif %}
+        </div>
+    </div>
+    <div id="lower">
+        <p>lorem ipsum</p>
+    </div>
+{% endblock %}
