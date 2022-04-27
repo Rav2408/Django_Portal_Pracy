@@ -17,6 +17,10 @@ TODO:
 User dziedziczy ze podstawowego usera
 Ogarnięcie linków
 
+Pytania:
+Czy przekierowywania pomiędzy stronami można tworzyć używając HTMLa (button)?
+
+
 Plan:
 
 
