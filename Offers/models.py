@@ -55,3 +55,4 @@ class Application(models.Model):
     offer = models.OneToOneField(Offer, on_delete=DO_NOTHING) #on_delete
     user = models.OneToOneField(User, on_delete=DO_NOTHING)
     response = models.CharField(('response'), max_length=50, blank=True)
+

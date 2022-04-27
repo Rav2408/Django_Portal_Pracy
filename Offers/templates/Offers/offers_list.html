@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!komentarz: w ten sposób listujemy obiekty danego modelu>
+    {% for offer in offers_list %}
+    <p>{{ offer.company }} , {{ offer.position }} , {{ offer.location }}</p>
+    {% endfor %}
+</body>
+</html>
