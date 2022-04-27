@@ -43,7 +43,7 @@ class Company(models.Model):
 
 class Offer(models.Model):
     company = models.CharField(('username'), max_length=25, blank=False)
-    position = models.CharField(('username'), max_length=20, blank=False)
+    position = models.CharField(('position'), max_length=20, blank=False)
     min_salary = models.IntegerField(blank=True)
     max_salary = models.IntegerField(blank=True)
     remote = models.BooleanField()
