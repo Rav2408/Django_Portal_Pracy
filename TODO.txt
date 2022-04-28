@@ -11,7 +11,8 @@ projekt dla grupy maksymalnie 3-osobowej
 Spotyamy się o 9:30
 
 Do zrobienia na najbliższe zajęcia:
-Pierwsza strona backend + frontend
+Templatka + kilka stron do wyświetlania czegoś
+https://demo.phpjabbers.com/free-web-templates/job-website-template-133/
 
 TODO:
 User dziedziczy ze podstawowego usera

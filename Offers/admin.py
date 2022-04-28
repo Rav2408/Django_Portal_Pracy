@@ -6,9 +6,9 @@ from .models import User, Company, Offer, Application
 # Register your models here.
 
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = []
+# @admin.register(User)
+# class UserAdmin(admin.ModelAdmin):
+#     list_display = []
 
 
 @admin.register(Company)
