@@ -11,7 +11,7 @@ def index(request):
 
 
 def home(request):
-    return render(request, "Offers/home.html", {})
+    return render(request, "Index/index.html", {})
 
 
 def register(request):
