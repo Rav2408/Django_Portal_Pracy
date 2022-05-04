@@ -18,6 +18,10 @@ def home(request):
     return render(request, "Index/index.html", {})
 
 
+def about(request):
+    return render(request, "Index/about.html", {})
+
+
 def jobs(request):
     return render(request, "Offers/jobs.html", {})
 
@@ -39,6 +43,10 @@ def register(request):
     context = {'form': form}
     return render(request, 'registration/register.html', context)
 
+
+def logout_view(request):
+    logout(request)
+    return render(request, "Index/index.html", {})
 
 def logout_view(request):
     logout(request)
