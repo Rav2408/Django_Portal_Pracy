@@ -10,6 +10,10 @@ figure, header, nav, section, article, aside, footer, figcaption {
   outline: 0;
 }
 
+login{
+  padding: 5px;
+}
+
 .clearfix:after {
   content: ".";
   display: block;

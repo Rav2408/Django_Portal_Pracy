@@ -10,8 +10,16 @@ def index(request):
     return render(request, "Offers/base.html", {})
 
 
+def login(request):
+    return render(request, "registration/login.html", {})
+
+
 def home(request):
     return render(request, "Index/index.html", {})
+
+
+def jobs(request):
+    return render(request, "Offers/jobs.html", {})
 
 
 def register(request):
@@ -34,7 +42,7 @@ def register(request):
 
 def logout_view(request):
     logout(request)
-    return render(request, "registration/logout.html", {})
+    return render(request, "Index/index.html", {})
 
 
 

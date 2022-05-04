@@ -1,26 +1,17 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="en">
   <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-
-    <title>PHPJabbers.com | Free Job Agency Website Template</title>
-
+    <title>PHPJabbers.com</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
-
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
     </head>
-    
     <body>
-    
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
       <div class="preloader-inner">
@@ -33,8 +24,7 @@
       </div>
     </div>
     <!-- ***** Preloader End ***** -->
-    
-    
+
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
         <div class="container">
@@ -42,15 +32,15 @@
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">Job Agency<em> Website</em></a>
+                        <a href="{% url 'home' %}" class="logo">Job Agency<em> Website</em></a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li><a href="index.html" class="active">Home</a></li>
-                            <li><a href="jobs.html">Jobs</a></li>
+                            <li><a href="{% url 'home' %}" class="active">Home</a></li>
+                            <li><a href="{% url 'jobs' %}">Jobs</a></li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>
-                              
+
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="about.html">About Us</a>
                                     <a class="dropdown-item" href="team.html">Team</a>
@@ -59,8 +49,14 @@
                                     <a class="dropdown-item" href="terms.html">Terms</a>
                                 </div>
                             </li>
-                            <li><a href="contact.html">Contact</a></li> 
-                        </ul>        
+                            {% if user.is_authenticated %}
+                            <li><a>Logged in as <b>{{user.username}}</b></a></li>
+                            <li><a href="/logout/">Log out</a></li>
+                            {% else %}
+                            <li><a href="{% url 'login' %}">Log in</a></li>
+                            <li><a href="{% url 'register' %}">Register</a></li>
+                            {% endif %}
+                        </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
                         </a>
@@ -77,13 +73,12 @@
         <video autoplay muted loop id="bg-video">
             <source src="{% static 'images/video.mp4' %}" type="video/mp4" />
         </video>
-
         <div class="video-overlay header-text">
             <div class="caption">
                 <h6>Lorem ipsum dolor sit amet</h6>
                 <h2>Find the perfect <em>Job</em></h2>
                 <div class="main-button">
-                    <a href="contact.html">Contact Us</a>
+                    <a href="{% url 'jobs' %}">Browse Jobs</a>
                 </div>
             </div>
         </div>
@@ -162,7 +157,7 @@
             <br>
 
             <div class="main-button text-center">
-                <a href="jobs.html">View Jobs</a>
+                <a href="{% url 'jobs' %}">View Jobs</a>
             </div>
         </div>
     </section>
@@ -348,23 +343,23 @@
         </div>
     </footer>
 
-    <!-- jQuery -->
-    <script src="static/js/jquery-2.1.0.min.js"></script>
+   <!-- jQuery -->
+    <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
 
     <!-- Bootstrap -->
-    <script src="static/js/popper.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
     <!-- Plugins -->
-    <script src="static/js/scrollreveal.min.js"></script>
-    <script src="static/js/waypoints.min.js"></script>
-    <script src="static/js/jquery.counterup.min.js"></script>
-    <script src="static/js/imgfix.min.js"></script> 
-    <script src="static/js/mixitup.js"></script> 
-    <script src="static/js/accordions.js"></script>
-    
+    <script src="{% static 'js/scrollreveal.min.js' %}"></script>
+    <script src="{% static 'js/waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'js/imgfix.min.js' %}"></script>
+    <script src="{% static 'js/mixitup.js' %}"></script>
+    <script src="{% static 'js/accordions.js' %}"></script>
+
     <!-- Global Init -->
-    <script src="static/js/custom.js"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
 
   </body>
 </html>
