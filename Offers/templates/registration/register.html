@@ -69,14 +69,14 @@
         </video>
         <div class="video-overlay header-text">
             <div class="caption">
-                  <form id="register" method="post" action="{% url 'register' %}">
+                  <form id="user_register" method="post" action="{% url 'register' %}">
                       {% csrf_token %}
 
                         {% if form.errors %}
                   <p>jakieś błędy</p>
                   {% endif %}
 
-                      {{ form }}
+                      {{form.as_p}}
 
                       <p><input type="submit"  value="Register"></p>
                       <input type="hidden" name="next" value="{{ next }}">
