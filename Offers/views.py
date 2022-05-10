@@ -49,7 +49,7 @@ def jobs(request):
 
 def job_details(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
-    return render(request, 'Offers/job-details.html', {'offer': offer})
+    return render(request, 'Offers/job-details.html', {'offer': offer}) #'company': offer.company.email
 
 
 def user_register(request):
