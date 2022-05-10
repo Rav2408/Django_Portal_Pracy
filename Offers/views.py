@@ -44,7 +44,12 @@ def about(request):
 
 
 def jobs(request):
-    return render(request, "Offers/jobs.html", {})
+    offersList = Offer.objects.all()
+    return render(request, "Offers/jobs.html", {'offers_list':offersList})
+
+def job_details(request, offer_id):
+    offer = get_object_or_404(Offer, pk=offer_id)
+    return render(request, 'Offers/job-details.html', {'offer': offer})
 
 
 def user_register(request):

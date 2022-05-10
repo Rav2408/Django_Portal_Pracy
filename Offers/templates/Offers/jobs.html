@@ -250,115 +250,138 @@
 
                 <div class="col-lg-8">
                     <div class="row">
+
+                        {% for offer in offers_list %}
+
                         <div class="col-md-6">
                             <div class="trainer-item">
                                 <div class="image-thumb">
                                     <img src="{% static 'images/product-1-720x480.jpg' %}" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
+                                    <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} </span>
 
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+                                    <h4>{{ offer.position }}</h4>
 
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
-
-                                    <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="{% static 'images/product-2-720x480.jpg' %}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
-
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
+                                    <p>{{ offer.company}} - {{ offer.location }}</p>
 
                                     <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="{% static 'images/product-3-720x480.jpg' %}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
-
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
-
-                                    <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
+                                        <li><a href="job-details/{{ offer.id }}/">+ View More</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="{% static 'images/product-4-720x480.jpg' %}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
+                        {% endfor %}
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="trainer-item">-->
+<!--                                <div class="image-thumb">-->
+<!--                                    <img src="{% static 'images/product-1-720x480.jpg' %}" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="down-content">-->
+<!--                                    <span> <sup>$</sup>70 000 </span>-->
 
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+<!--                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>-->
 
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
+<!--                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>-->
 
-                                    <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="{% static 'images/product-5-720x480.jpg' %}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
+<!--                                    <ul class="social-icons">-->
+<!--                                        <li><a href="job-details.html">+ View More</a></li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="trainer-item">-->
+<!--                                <div class="image-thumb">-->
+<!--                                    <img src="{% static 'images/product-2-720x480.jpg' %}" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="down-content">-->
+<!--                                    <span> <sup>$</sup>70 000 </span>-->
 
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+<!--                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>-->
 
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
+<!--                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>-->
 
-                                    <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="{% static 'images/product-6-720x480.jpg' %}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
+<!--                                    <ul class="social-icons">-->
+<!--                                        <li><a href="job-details.html">+ View More</a></li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="trainer-item">-->
+<!--                                <div class="image-thumb">-->
+<!--                                    <img src="{% static 'images/product-3-720x480.jpg' %}" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="down-content">-->
+<!--                                    <span> <sup>$</sup>70 000 </span>-->
 
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+<!--                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>-->
 
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
+<!--                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>-->
 
-                                    <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+<!--                                    <ul class="social-icons">-->
+<!--                                        <li><a href="job-details.html">+ View More</a></li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="trainer-item">-->
+<!--                                <div class="image-thumb">-->
+<!--                                    <img src="{% static 'images/product-4-720x480.jpg' %}" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="down-content">-->
+<!--                                    <span> <sup>$</sup>70 000 </span>-->
+
+<!--                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>-->
+
+<!--                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>-->
+
+<!--                                    <ul class="social-icons">-->
+<!--                                        <li><a href="job-details.html">+ View More</a></li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="trainer-item">-->
+<!--                                <div class="image-thumb">-->
+<!--                                    <img src="{% static 'images/product-5-720x480.jpg' %}" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="down-content">-->
+<!--                                    <span> <sup>$</sup>70 000 </span>-->
+
+<!--                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>-->
+
+<!--                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>-->
+
+<!--                                    <ul class="social-icons">-->
+<!--                                        <li><a href="job-details.html">+ View More</a></li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="trainer-item">-->
+<!--                                <div class="image-thumb">-->
+<!--                                    <img src="{% static 'images/product-6-720x480.jpg' %}" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="down-content">-->
+<!--                                    <span> <sup>$</sup>70 000 </span>-->
+
+<!--                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>-->
+
+<!--                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>-->
+
+<!--                                    <ul class="social-icons">-->
+<!--                                        <li><a href="job-details.html">+ View More</a></li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
