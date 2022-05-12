@@ -26,6 +26,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#RECAPTCHA
+RECAPTCHA_PUBLIC_KEY = '6LczTeEfAAAAANM3rsBQ63TRXKhcJwHOT0skIhhY'
+RECAPTCHA_PRIVATE_KEY = '6LczTeEfAAAAAEUfRIJXXfOxpT4DY0WWs4FTf1-R'
+
 
 # Application definition
 
@@ -38,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'livereload',
+    'captcha',
 ]
 
 MIDDLEWARE = [

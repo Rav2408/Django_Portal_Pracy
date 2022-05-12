@@ -1,9 +1,13 @@
+from django.contrib.sites import requests
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+
+from django.conf import settings
 from .models import Offer
 from .forms import OrderForm, CreateUserForm
-from django.http import HttpResponse
+from django.http import HttpResponse, BadHeaderError
 from django.contrib import messages
 
 
@@ -47,6 +51,7 @@ def jobs(request):
     offersList = Offer.objects.all()
     return render(request, "Offers/jobs.html", {'offers_list':offersList})
 
+
 def job_details(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
     return render(request, 'Offers/job-details.html', {'offer': offer}) #'company': offer.company.email
@@ -62,14 +67,48 @@ def user_register(request):
             if form.is_valid():
                 form.save()
                 username = form.cleaned_data.get('username')
+                email = form.cleaned_data.get('email')
                 password = form.cleaned_data.get('password1')
                 messages.success(request, 'Account was created for ' + username)
-
                 user = authenticate(username=username, password=password)
                 login(request, user)
+
+
+                ''' reCAPTCHA validation '''
+                recaptcha_response = request.POST.get('g-recaptcha-response')
+                data = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': recaptcha_response
+                }
+                r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+                result = r.json()
+
+                print(result)
+
+                ''' if reCAPTCHA returns True '''
+                if result['success']:
+                    ''' Send email '''
+                    subject = "Website Inquiry"
+                    body = {
+                    'first_name': form.cleaned_data['first_name'],
+                    'last_name': form.cleaned_data['last_name'],
+                    'email': form.cleaned_data['email_address'],
+                     }
+                    message = "\n".join(body.values())
+
+                try:
+                    send_mail(subject, message, 'admin@example.com', ['admin@example.com'])
+                except BadHeaderError:
+                    return HttpResponse('Invalid header found.')
+
+                messages.success(request, "Message sent.")
                 return redirect('home')
 
-        context = {'form': form}
+            ''' if reCAPTCHA returns False '''
+            messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+
+        form = CreateUserForm() #to ta z polem emaila
+        context = {'form': form, 'recaptcha_public_key': settings.RECAPTCHA_PUBLIC_KEY}
         return render(request, 'registration/register.html', context)
 
 #def register(request):
