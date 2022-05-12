@@ -10,15 +10,6 @@ figure, header, nav, section, article, aside, footer, figcaption {
   outline: 0;
 }
 
-#login{
-  padding: 5px;
-  background-color: #000000;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  color: black;
-}
-
 .clearfix:after {
   content: ".";
   display: block;
@@ -556,9 +547,9 @@ banner
 .video-overlay {
     position: absolute;
     background-color: rgba(35,45,57,0.8);
-    top: 0;
-    left: 0;
-    bottom: 7px;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
     width: 100%;
 }
 

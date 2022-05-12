@@ -30,29 +30,19 @@
             <div class="row">
                 <div class="col-lg-4">
                     <form action="#">
-                         <h5 style="margin-bottom: 15px">Type</h5>
+                         <h5 style="margin-bottom: 15px">Salary</h5>
 
                          <div>
                               <label>
-                                   <input type="checkbox">
-
-                                   <span>Contract (5)</span>
+                                  <span>Min. </span>
+                                   <input type="number">
                               </label>
                          </div>
 
                          <div>
                               <label>
-                                   <input type="checkbox">
-
-                                   <span>Full time (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Internship (5)</span>
+                                  <span>Max. </span>
+                                   <input type="number">
                               </label>
                          </div>
 
@@ -168,6 +158,10 @@
                                     <span>&lt; 1 (5)</span>
                               </label>
                          </div>
+                        <p>&nbsp;</p>
+                        <div class="main-button">
+                            <a href="{% url 'jobs' %}">Submit</a>
+                        </div>
                     </form>
                     
                     <br>
