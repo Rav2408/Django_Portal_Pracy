@@ -7,11 +7,6 @@ from django.http import HttpResponse
 from django.contrib import messages
 
 
-# Create your views here.
-def index(request):
-    return render(request, "Offers/base.html", {})
-
-
 #def user_login(request):
 #    return render(request, "registration/login.html", {})
 
@@ -42,6 +37,8 @@ def home(request):
 def about(request):
     return render(request, "Index/about.html", {})
 
+def contact(request):
+    return render(request, "Index/contact.html", {})
 
 def jobs(request):
     offersList = Offer.objects.all()
@@ -102,8 +99,8 @@ def logout_view(request):
 
 #/offer_id wyświetla stronę ze szczegółami na temat tej oferty
 def detail(request, offer_id):
-    offer = get_object_or_404(Offer, pk=offer_id)
-    return render(request, 'Offers/detail.html', {'offer': offer})
+   offer = get_object_or_404(Offer, pk=offer_id)
+   return render(request, 'Offers/detail.html', {'offer': offer})
 
 
 #tworzysz zmienną przechowującą liste obiektów a następnie

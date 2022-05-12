@@ -10,8 +10,13 @@ figure, header, nav, section, article, aside, footer, figcaption {
   outline: 0;
 }
 
-login{
+#login{
   padding: 5px;
+  background-color: #000000;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: black;
 }
 
 .clearfix:after {
@@ -73,9 +78,9 @@ ul {
 }
 
 p {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 25px;
-  color: #7a7a7a;
+  color: #ed563b;
 }
 
 /* 

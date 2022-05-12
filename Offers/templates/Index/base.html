@@ -6,10 +6,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-    <title>PHPJabbers.com</title>
+    <title>DjangoJobPortal.com</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      {% block head %}{% endblock %}
     </head>
     <body>
     <!-- ***** Preloader Start ***** -->
@@ -36,7 +37,7 @@
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li><a href="{% url 'home' %}" class="active">Home</a></li>
+                            <li><a href="{% url 'home' %}">Home</a></li>
                             <li><a href="{% url 'jobs' %}">Jobs</a></li>
                             <li><a href="{% url 'about' %}">About us</a></li>
                             {% if user.is_authenticated %}
@@ -57,3 +58,38 @@
         </div>
     </header>
     <!-- ***** Header Area End ***** -->
+
+    {% block body %}{% endblock %}
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>
+                        Copyright © 2020 Company Name
+                        - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+
+    <!-- Bootstrap -->
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <!-- Plugins -->
+    <script src="{% static 'js/scrollreveal.min.js' %}"></script>
+    <script src="{% static 'js/waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'js/imgfix.min.js' %}"></script>
+    <script src="{% static 'js/mixitup.js' %}"></script>
+    <script src="{% static 'js/accordions.js' %}"></script>
+
+    <!-- Global Init -->
+    <script src="{% static 'js/custom.js' %}"></script>
+    </body>
+</html>
