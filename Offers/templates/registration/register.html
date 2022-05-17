@@ -3,6 +3,10 @@
 {% block head %}
 {% endblock %}
 {% block body %}
+<!-- reCAPTCHA API -->
+<script src='https://www.google.com/recaptcha/api.js?render={{6LczTeEfAAAAANM3rsBQ63TRXKhcJwHOT0skIhhY}}'>
+
+</script>
     <!-- ***** Main Banner Area Start ***** -->
     <div class="main-banner" id="top">
         <video autoplay muted loop id="bg-video">
@@ -11,10 +15,8 @@
         <div class="video-overlay header-text">
             <div class="caption">
 
-                <!-- reCAPTCHA API -->
-                      <script src='https://www.google.com/recaptcha/api.js?render={{6LczTeEfAAAAANM3rsBQ63TRXKhcJwHOT0skIhhY}}'></script>
-                      <title>Django - Google reCAPTCHA v3</title>
 
+                    <!--
                       <script>
                           //global grecaptcha
                           grecaptcha.ready(function() {
@@ -23,7 +25,14 @@
                               });
                           });
                       </script>
-
+                      -->
+                {% if messages %}
+                  <ul class="messages" >
+                      {% for message in messages %}
+                      <li class="{{message.tags}}"> {{message}}</li>
+                      {% endfor %}
+                  </ul>
+                {% endif %}
 
 
                   <form id="user_register" method="post" action="{% url 'register' %}">
@@ -45,14 +54,16 @@
                       <p>{{form.password2.label}}
                       {{form.password2}}</p>
                         <p></p>
-                      {{form.captcha}}
+                      <!-- {{form.captcha}}  zdubluje sie-->
 
-                      <p><input type="submit" id="g-recaptcha-response" name="g-recaptcha-response" value="Register"></p>
+                      <div class="g-recaptcha" data-sitekey="6LczTeEfAAAAANM3rsBQ63TRXKhcJwHOT0skIhhY" ></div>
                       <input type="hidden" name="next" value="{{ next }}">
+                      <button type="submit" class="btn btn-primary" >Register</button>
 
-                      <!-- reCAPTCHA input
-                      <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
-                      <button type="submit">Submit</button>
+
+                      <!--
+                      <p><input type="submit" class="btn btn-primary">Register</p>
+                      <input type="hidden" name="next" value="{{ next }}">
                       -->
                   </form>
                 </div>
