@@ -1,8 +1,11 @@
+from django.contrib.sites import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+
+from Django_Portal_Pracy import settings
 from .models import Offer
-from .forms import OrderForm, CreateUserForm
+from .forms import OfferForm, CreateUserForm
 from django.http import HttpResponse
 from django.contrib import messages
 
@@ -37,12 +40,15 @@ def home(request):
 def about(request):
     return render(request, "Index/about.html", {})
 
+
 def contact(request):
     return render(request, "Index/contact.html", {})
+
 
 def jobs(request):
     offersList = Offer.objects.all()
     return render(request, "Offers/jobs.html", {'offers_list':offersList})
+
 
 def job_details(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
@@ -59,14 +65,38 @@ def user_register(request):
             if form.is_valid():
                 form.save()
                 username = form.cleaned_data.get('username')
+                email = form.cleaned_data.get('email')
                 password = form.cleaned_data.get('password1')
                 messages.success(request, 'Account was created for ' + username)
 
                 user = authenticate(username=username, password=password)
+
+                # ---------------------------------------------------------------------
+                # ''' reCAPTCHA validation '''
+                recaptcha_response = request.POST.get('g-recaptcha-response')
+                data = {
+                    'secret': settings.RECAPTCHA_PRIVATE_KEY,
+                    'response': recaptcha_response
+                }
+                r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+                result = r.json()
+
+                print(result)
+
+                # ''' if reCAPTCHA returns True '''
+                if result['success']:
+                    messages.success(request, "Message sent.")
+                    return redirect('registration/home.html')
+
+                ''' if reCAPTCHA returns False '''
+                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+
+                # ----------------------------------------------------------------
                 login(request, user)
                 return redirect('home')
 
-        context = {'form': form}
+        form = CreateUserForm()  # to ta z polem emaila
+        context = {'form': form, 'recaptcha_public_key': settings.RECAPTCHA_PUBLIC_KEY}
         return render(request, 'registration/register.html', context)
 
 #def register(request):
