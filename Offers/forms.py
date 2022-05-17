@@ -7,7 +7,7 @@ from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 
 
-class OrderForm(ModelForm):
+class OfferForm(ModelForm):
     class Meta:
         model = Offer
         fields = '__all__'
@@ -21,10 +21,10 @@ class CreateUserForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
-
     def save(self, commit=True):
         user = super(CreateUserForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
+
         if commit:
             user.save()
         return user

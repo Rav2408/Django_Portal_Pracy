@@ -107,18 +107,31 @@
                       {{form.password2.label}}
                       {{form.password2}}
 
-                      {{form.captcha}}
 
-                      <p><input type="submit"  value="Register"></p>
+                      <!--<p><input type="submit"  value="Register"></p>
                       <input type="hidden" name="next" value="{{ next }}">
-
-                       <!-- reCAPTCHA input -->
-                      <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
-                      <button type="submit">Submit</button>
-
-
+                      -->
 
                   </form>
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert text-center mt-5 alert-{{message.tags}}">
+                    {{message}}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <form action="" method="post" class="text-center mt-5">
+                    {% csrf_token %}
+                    {{form.captcha}}
+
+                    <!-- reCAPTCHA input -->
+                    <!--<input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response"> -->
+                    <input type="submit" value="Register" class="btn btn-primary">
+                    <input type="hidden" name="next" value="{{ next }}">
+                    <!--<button type="submit">Submit</button>-->
+                </form>
+
                 </div>
             </div>
         </div>
