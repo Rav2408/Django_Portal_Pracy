@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 
 
-from .models import User, Company, Offer, Application
+from .models import Company, Offer, Application
 # Register your models here.
 
 
@@ -15,7 +15,7 @@ from .models import User, Company, Offer, Application
 class CompanyAdmin(admin.ModelAdmin):
     # fields = ('image_tag',)
     # readonly_fields = ('image_tag',)
-    list_display = ['username', 'company_name', 'logo']
+    list_display = [ 'company_name', 'logo']
 
 
 @admin.register(Offer)
