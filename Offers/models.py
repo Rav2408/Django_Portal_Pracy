@@ -13,14 +13,17 @@ class Company(models.Model):
     street = models.CharField('street', max_length=20, blank=False)
     street_number = models.IntegerField(blank=False)
     postcode = models.CharField('postcode', max_length=6, blank=False)
-    suite_number = models.IntegerField(blank=True)
+    suite_number = models.IntegerField(blank=True, null=True)
     email = models.EmailField('email', blank=False)
     social_links = models.URLField(null=True)
     logo = models.ImageField(upload_to="logo/", null=True, blank=True, default=None)
 
+    def __str__(self):
+        return self.company_name
+
 
 class Offer(models.Model):
-    company = models.CharField('username', max_length=25, blank=False)
+    company = models.ForeignKey(Company, on_delete=DO_NOTHING)
     position = models.CharField('position', max_length=20, blank=False)
     min_salary = models.IntegerField(blank=True)
     max_salary = models.IntegerField(blank=True)
