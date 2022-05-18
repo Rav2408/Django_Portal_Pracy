@@ -11,8 +11,8 @@
                     <div class="cta-content">
                         <br>
                         <br>
-                        <h2><em>$70 000</em></h2>
-                        <p>Security officer - luxury retail</p>
+                        <h2><em>{{offer.min_salary}}PLN - {{offer.max_salary}}PLN</em></h2>
+                        <p>{{offer.position}}</p>
 
                         <div class="main-button">
                           <a href="#">Apply for this Job</a>
@@ -36,6 +36,7 @@
                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
               </ol>
+                <!--
               <div class="carousel-inner">
                 <div class="carousel-item active">
                   <img class="d-block w-100" src="{% static 'images/job-image-1-1200x600.jpg' %}" alt="First slide">
@@ -56,6 +57,7 @@
                 <span class="sr-only">Next</span>
               </a>
             </div>
+            -->
             
             <br>
             <br>
@@ -64,38 +66,29 @@
               <div class="col-lg-4">
                 <ul>
                   <li><a href='#tabs-1'><i class="fa fa-cog"></i> Job Description</a></li>
-                  <li><a href='#tabs-2'><i class="fa fa-info-circle"></i> About Employer</a></li>
-                  <li><a href='#tabs-3'><i class="fa fa-phone"></i> Contact Details</a></li>
+                  <li><a href='#tabs-2'><i class="fa fa-phone"></i> Contact Details</a></li>
                 </ul>
               </div>
               <div class="col-lg-8">
                 <section class='tabs-content' style="width: 100%;">
                   <article id='tabs-1'>
-                    <h4>Job Description</h4>
+                    <h4>Job description</h4>
 
                     <p>{{ offer.description }}</p>
+                    <h4>Job details</h4>
 
-                  </article>
-
-                  <article id='tabs-2'>
-                    <h4>About Employer</h4>
-
-                    <p class="lead"> <i class="fa fa-map-marker"></i> {{offer.location}} </p>
+                    <p> <i class="fa fa-map-marker"></i>Location: {{offer.location}} </p>
 
 <!--                        {% for company in offer.company %}-->
 <!--                            <p>cos tam</p>-->
 <!--                            <p>{{ company.company_name }}</p>-->
 <!--                        {% endfor %}-->
 
-                    <p>{{offer.company}}</p> <!TODO>
-
-                    <p>adsadasdas</p>
-
-                    <p>bla bla bla</p>
-
+                    <p>Employer: {{offer.company}}</p>
+                    <p>Remote: {% if offer.remote %}Yes{% else %}No{% endif %}</p>
                    </article>
 
-                  <article id='tabs-3'>
+                  <article id='tabs-2'>
                     <h4>Contact Details</h4>
 
                     <div class="row">   

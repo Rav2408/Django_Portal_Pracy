@@ -9,6 +9,51 @@ figure, header, nav, section, article, aside, footer, figcaption {
   border: 0;
   outline: 0;
 }
+.offer {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.offer:before {
+  content:'';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+}
+
+.offer > form,
+.offer .container {
+  position: relative;
+  z-index: 2
+}
+
+.offer-bg {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.offer:before {
+  content:'';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(35,45,57,0.8);
+}
+
+.offer > form,
+.offer .container {
+  position: relative;
+  z-index: 2
+}
 
 .clearfix:after {
   content: ".";
@@ -130,6 +175,11 @@ body {
 .section-heading h2 em {
   font-style: normal;
   color: #ed563b;
+}
+.section-heading h3 {
+  font-size: 14px;
+  color: #232d39;
+  text-transform: uppercase;
 }
 
 .section-heading img {
