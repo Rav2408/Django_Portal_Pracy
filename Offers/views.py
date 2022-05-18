@@ -3,6 +3,7 @@ import urllib
 import urllib.parse
 import urllib.request
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.sites import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
@@ -10,13 +11,10 @@ from django.contrib.auth import authenticate, login, logout
 
 from Django_Portal_Pracy import settings
 from .models import Offer
-from .forms import OfferForm, CreateUserForm
+from .forms import OfferForm, CreateUserForm, CreateOfferForm
 from django.http import HttpResponse
 from django.contrib import messages
 
-
-# def user_login(request):
-#    return render(request, "registration/login.html", {})
 
 def user_login(request):
     if request.user.is_authenticated:
@@ -38,26 +36,9 @@ def user_login(request):
         return render(request, 'registration/login.html', context)
 
 
-def home(request):
+def logout_view(request):
+    logout(request)
     return render(request, "Index/index.html", {})
-
-
-def about(request):
-    return render(request, "Index/about.html", {})
-
-
-def contact(request):
-    return render(request, "Index/contact.html", {})
-
-
-def jobs(request):
-    offersList = Offer.objects.all()
-    return render(request, "Offers/jobs.html", {'offers_list': offersList})
-
-
-def job_details(request, offer_id):
-    offer = get_object_or_404(Offer, pk=offer_id)
-    return render(request, 'Offers/job-details.html', {'offer': offer})  # 'company': offer.company.email
 
 
 def user_register(request):
@@ -67,9 +48,8 @@ def user_register(request):
         if request.method == 'POST':
             form = CreateUserForm(request.POST)
             if form.is_valid():
-                #form.save()
 
-                # ''' reCAPTCHA validation '''
+                ''' reCAPTCHA validation '''
                 recaptcha_response = request.POST.get('g-recaptcha-response')
                 url = 'https://www.google.com/recaptcha/api/siteverify'
                 values = {
@@ -85,7 +65,7 @@ def user_register(request):
                     form.save()
                     username = form.cleaned_data.get('username')
                     password = form.cleaned_data.get('password1')
-                    messages.success(request, 'Witamy na pokładzie!')
+                    messages.success(request, 'Account was created for ' + username)
                     user = authenticate(username=username, password=password)
                     login(request, user)
                 else:
@@ -96,37 +76,46 @@ def user_register(request):
         else:
             form = CreateUserForm()  # to ta z polem emaila
 
-        #context = {'form': form, 'recaptcha_public_key': settings.RECAPTCHA_PUBLIC_KEY}
-        context = {'form':form}
+        form = CreateUserForm()  # to ta z polem emaila
+        context = {'form': form}
         return render(request, 'registration/register.html', context)
 
 
-# def register(request):
-
-#  if request.method == 'POST':
-#     form = CreateUserForm(request.POST)
-#    if form.is_valid():
-#       form.save()
-#      username = form.cleaned_data.get('username')
-#     password = form.cleaned_data['password1']
-#     user = authenticate(username=username, password=password)
-#     login(request, user)
-#     return redirect('home')
-# else:
-#    form = UserCreationForm()
-
-# context = {'form': form}
-# return render(request, 'registration/register.html', context)
-
-
-def logout_view(request):
-    logout(request)
+def home(request):
     return render(request, "Index/index.html", {})
 
 
-def logout_view(request):
-    logout(request)
-    return render(request, "Index/index.html", {})
+def about(request):
+    return render(request, "Index/about.html", {})
+
+
+def contact(request):
+    return render(request, "Index/contact.html", {})
+
+
+def profile(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = CreateOfferForm(request.POST)
+            if form.is_valid():
+                form.save(request)
+                return redirect('Offers:CreateOfferForm')
+
+        else:
+            form = CreateOfferForm()
+
+    context = { 'form' : form }
+    return render(request, "Index/profile.html", context)
+
+
+def jobs(request):
+    offersList = Offer.objects.all()
+    return render(request, "Offers/jobs.html", {'offers_list': offersList})
+
+
+def job_details(request, offer_id):
+    offer = get_object_or_404(Offer, pk=offer_id)
+    return render(request, 'Offers/job-details.html', {'offer': offer})  # 'company': offer.company.email
 
 
 # /offer_id wyświetla stronę ze szczegółami na temat tej oferty

@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Offer
+
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 
@@ -14,8 +15,6 @@ class OfferForm(ModelForm):
 
 
 class CreateUserForm(UserCreationForm):
-
-
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
@@ -30,3 +29,23 @@ class CreateUserForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class CreateOfferForm(forms.ModelForm):
+    class Meta:
+        model = Offer
+        fields = [
+            'company',
+            'position',
+            'min_salary',
+            'max_salary',
+            'remote',
+            'location',
+            'description'
+        ]
+
+    def save(self, request):
+        self.instance.author = request.user
+        saved_data = super().save()
+        request.session['new_offer_id'] = self.instance.id
+        return saved_data

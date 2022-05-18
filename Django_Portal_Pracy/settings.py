@@ -14,7 +14,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -26,10 +25,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-#RECAPTCHA
+# RECAPTCHA
 RECAPTCHA_PUBLIC_KEY = '6LczTeEfAAAAANM3rsBQ63TRXKhcJwHOT0skIhhY'
 RECAPTCHA_PRIVATE_KEY = '6LczTeEfAAAAAEUfRIJXXfOxpT4DY0WWs4FTf1-R'
-
 
 # Application definition
 
@@ -76,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Django_Portal_Pracy.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -90,7 +87,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -110,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -121,7 +116,6 @@ TIME_ZONE = 'Europe/Warsaw'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -139,6 +133,7 @@ LOGIN_REDIRECT_URL = '/'
 REGISTER_REDIRECT_URL = '/'
 
 from django.contrib.messages import constants as messages
+
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',

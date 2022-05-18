@@ -1,0 +1,103 @@
+{% extends 'Index/base.html' %}
+{% load static %}
+{% block head %}
+{% endblock %}
+{% block body %}
+    <section class="section section-bg" id="call-to-action" style="background-image: url({% static 'images/banner-image-1-1920x500.jpg' %})">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="cta-content">
+                        <br>
+                        <br>
+                        <h2>To jest twoj profil  <em>:DDDD</em></h2>
+                        <p>jakis cyctat</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ***** Features Item Start ***** -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-heading">
+
+                        <!-- FORMY DJANGO DO TWORZENIA OFERTY -->
+                        <form id="profile" method="post" action="{% url 'profile' %}">
+                      {% csrf_token %}
+
+                        {% if form.errors %}
+                  <p>{{form.errors}}</p>
+                  {% endif %}
+
+                     <p>{{form.company.label}}
+                      {{form.company}}</p>
+                        <p>&nbsp;</p>
+                      <p>{{form.position.label}}
+                      {{form.position}}</p>
+                        <p>&nbsp;</p>
+                      <p>{{form.min_salary.label}}
+                      {{form.min_salary}}</p>
+                        <p>&nbsp;</p>
+                      <p>{{form.max_salary.label}}
+                      {{form.max_salary}}</p>
+                        <p></p>
+                             <p>{{form.remote.label}}
+                      {{form.remote}}</p>
+                        <p></p>
+                             <p>{{form.location.label}}
+                      {{form.location}}</p>
+                        <p></p>
+                             <p>{{form.description.label}}
+                      {{form.description}}</p>
+                        <p></p>
+
+
+                       <p><input type="submit"  value="Add"></p>
+                      <input type="hidden" name="next" value="{{ next }}">
+
+
+                  </form>
+
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="icon">
+                        <i class="fa fa-phone"></i>
+                    </div>
+
+                    <h5><a href="#">+1 333 4040 5566</a></h5>
+
+                    <br>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="icon">
+                        <i class="fa fa-envelope"></i>
+                    </div>
+
+                    <h5><a href="#">contact@company.com</a></h5>
+
+                    <br>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="icon">
+                        <i class="fa fa-map-marker"></i>
+                    </div>
+
+                    <h5>212 Barrington Court New York</h5>
+
+                    <br>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Features Item End ***** -->
+
+{% endblock %}

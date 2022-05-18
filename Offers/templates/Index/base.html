@@ -41,7 +41,7 @@
                             <li><a href="{% url 'jobs' %}">Jobs</a></li>
                             <li><a href="{% url 'about' %}">About us</a></li>
                             {% if user.is_authenticated %}
-                            <li><a>Logged in as <b>{{user.username}}</b></a></li>
+                            <li><a href="{% url 'profile' %}">Logged in as <b>{{user.username}}</b></a></li>
                             <li><a href="/logout/">Log out</a></li>
                             {% else %}
                             <li><a href="{% url 'login' %}">Log in</a></li>
