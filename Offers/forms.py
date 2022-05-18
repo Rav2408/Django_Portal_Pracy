@@ -14,12 +14,14 @@ class OfferForm(ModelForm):
 
 
 class CreateUserForm(UserCreationForm):
-    feedback = forms.CharField(widget=forms.Textarea)
-    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+        feedback = forms.CharField(widget=forms.Textarea)
+        captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
     def save(self, commit=True):
         user = super(CreateUserForm, self).save(commit=False)
