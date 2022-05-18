@@ -11,7 +11,8 @@ from django.contrib.auth import authenticate, login, logout
 
 from Django_Portal_Pracy import settings
 from .models import Offer
-from .forms import OfferForm, CreateUserForm, CreateOfferForm
+from .forms import CreateUserForm, CreateOfferForm
+# from .forms import OfferForm, CreateUserForm, CreateOfferForm
 from django.http import HttpResponse
 from django.contrib import messages
 
@@ -99,12 +100,12 @@ def profile(request):
             form = CreateOfferForm(request.POST)
             if form.is_valid():
                 form.save(request)
-                return redirect('Offers:CreateOfferForm')
+                return redirect('home')
 
         else:
             form = CreateOfferForm()
 
-    context = { 'form' : form }
+    context = {'form': form}
     return render(request, "Index/profile.html", context)
 
 

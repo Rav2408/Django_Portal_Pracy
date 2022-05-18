@@ -8,10 +8,10 @@ from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 
 
-class OfferForm(ModelForm):
-    class Meta:
-        model = Offer
-        fields = '__all__'
+# class OfferForm(ModelForm):
+#    class Meta:
+#        model = Offer
+#        fields = '__all__'
 
 
 class CreateUserForm(UserCreationForm):
