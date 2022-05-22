@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 
 from Django_Portal_Pracy import settings
 from .models import Offer, Company
-from .forms import CreateUserForm, CreateOfferForm
+from .forms import CreateUserForm, CreateOfferForm, CreateCompanyForm
 # from .forms import OfferForm, CreateUserForm, CreateOfferForm
 from django.http import HttpResponse
 from django.contrib import messages
@@ -44,7 +44,7 @@ def logout_view(request):
 
 def user_register(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('register_company')
     else:
         if request.method == 'POST':
             form = CreateUserForm(request.POST)
@@ -107,6 +107,20 @@ def profile(request):
 
     context = {'form': form}
     return render(request, "Index/profile.html", context)
+
+def register_company(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = CreateCompanyForm(request.POST)
+            if form.is_valid():
+                form.save(request)
+                return redirect('home')
+
+        else:
+            form = CreateCompanyForm()
+
+    context = {'form': form}
+    return render(request, "Index/register_company.html", context)
 
 
 def jobs(request):

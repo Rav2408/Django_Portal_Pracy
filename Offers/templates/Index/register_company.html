@@ -1,0 +1,77 @@
+{% extends 'Index/base.html' %}
+{% load static %}
+{% block head %}
+{% endblock %}
+{% block body %}
+    <section class="section section-bg" id="call-to-action" style="background-image: url({% static 'images/about-fullscreen-1-1920x700.jpg' %})">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="cta-content">
+                        <br>
+                        <br>
+                        <br>
+                        <h2>Register your <em>company</em></h2>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ***** Features Item Start ***** -->
+    <section>
+        <div class="text-center">
+            <br>
+            <br>
+            <!-- FORMY DJANGO DO TWORZENIA OFERTY -->
+            <form method="post" action="{% url 'register_company' %}">
+                <h2>Add your information</h2>
+                <br>
+              {% csrf_token %}
+
+                {% if form.errors %}
+                  <p>{{form.errors}}</p>
+                  {% endif %}
+
+             <p>{{form.company_name.label}}
+              {{form.company_name}}</p>
+                <br>
+              <p>{{form.city.label}}
+              {{form.city}}</p>
+                <br>
+                <p>{{form.street.label}}
+              {{form.street}}</p>
+                <br>
+                <p>{{form.street_number.label}}
+              {{form.street_number}}</p>
+                <br>
+                <p>{{form.postcode.label}}
+              {{form.postcode}}</p>
+                <br>
+                <p>{{form.suite_number.label}}
+              {{form.suite_number}}</p>
+                <br>
+                <p>{{form.email.label}}
+              {{form.email}}</p>
+                <br>
+                <p>{{form.phone.label}}
+              {{form.phone}}</p>
+                <br>
+                <p>{{form.social_links.label}}
+              {{form.social_links}}</p>
+                <br>
+                <p>{{form.logo.label}}
+              {{form.logo}}</p>
+                <br>
+
+               <p><input type="submit" class="main-button"  value="Add"></p>
+              <input type="hidden" name="next" value="{{ next }}">
+
+            </form>
+        </div>
+    </section>
+    <!-- ***** Features Item End ***** -->
+
+{% endblock %}
