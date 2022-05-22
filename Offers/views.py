@@ -10,7 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 
 from Django_Portal_Pracy import settings
-from .models import Offer
+from .models import Offer, Company
 from .forms import CreateUserForm, CreateOfferForm
 # from .forms import OfferForm, CreateUserForm, CreateOfferForm
 from django.http import HttpResponse
@@ -116,7 +116,8 @@ def jobs(request):
 
 def job_details(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
-    return render(request, 'Offers/job-details.html', {'offer': offer})  # 'company': offer.company.email
+    company = get_object_or_404(Company, pk=offer.company_id)
+    return render(request, 'Offers/job-details.html', {'offer': offer, 'company':company})
 
 
 # /offer_id wyświetla stronę ze szczegółami na temat tej oferty

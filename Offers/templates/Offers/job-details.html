@@ -79,10 +79,7 @@
 
                     <p> <i class="fa fa-map-marker"></i>Location: {{offer.location}} </p>
 
-<!--                        {% for company in offer.company %}-->
-<!--                            <p>cos tam</p>-->
-<!--                            <p>{{ company.company_name }}</p>-->
-<!--                        {% endfor %}-->
+
 
                     <p>Employer: {{offer.company}}</p>
                     <p>Remote: {% if offer.remote %}Yes{% else %}No{% endif %}</p>
@@ -95,24 +92,20 @@
                         <div class="col-sm-6">
                             <label>Name</label>
 
-                            <p>John Smith</p>
+                            <p>{{company.user}}</p>
                         </div>
                         <div class="col-sm-6">
                             <label>Phone</label>
 
-                            <p>123-456-789 </p>
-                        </div>
-                        <div class="col-sm-6">
-                            <label>Mobile phone</label>
-                            <p>456789123 </p>
+                            <p>{{company.phone}}</p>
                         </div>
                         <div class="col-sm-6">
                             <label>Email</label>
-                            <p><a href="#">john@carsales.com</a></p>
+                            <p><a href="#">{{company.email}}</a></p>
                         </div>
                         <div class="col-sm-6">
                             <label>Website</label>
-                            <p><a href="http://www.cannonguards.com/">http://www.cannonguards.com/</a></p>
+                            <p><a href="{{company.social_links}}">{{company.social_links}}/</a></p>
                         </div>
                     </div>
                   </article>

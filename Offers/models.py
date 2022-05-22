@@ -17,9 +17,13 @@ class Company(models.Model):
     email = models.EmailField('email', blank=False)
     social_links = models.URLField(null=True)
     logo = models.ImageField(upload_to="logo/", null=True, blank=True, default=None)
+    phone = models.CharField('phone', max_length=20, blank=False)
 
     def __str__(self):
         return self.company_name
+
+    def company_id(self):
+        return self.id
 
 
 class Offer(models.Model):
