@@ -46,6 +46,11 @@ class Offer(models.Model):
     location = models.CharField('location', max_length=50, blank=False)
     description = models.TextField(blank=True)
 
+    def __str__(self):
+        return self.company
+
+    def offer_id(self):
+        return self.id
 
 class Application(models.Model):
     offer = models.OneToOneField(Offer, on_delete=DO_NOTHING)  # on_delete

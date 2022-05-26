@@ -111,6 +111,27 @@ def profile(request):
     return render(request, "Index/profile.html", context)
 
 
+class Profile(CreateView):
+    template_name = 'Index/profile.html'
+    form_class = CreateOfferForm
+    model = Offer
+    success_url = reverse_lazy('home')
+
+    def get_object(self, queryset=None):
+        """This loads the profile of the currently logged in user"""
+        print(self.request)
+        return Company.objects.get(pk=self.request.company.pk)
+
+    def form_valid(self, form):
+        """Here is where you set the user for the new profile"""
+        instance = form.instance  # This is the new object being saved
+        company = get_object_or_404(Company, user=self.request.user.pk)
+        instance.company = company
+        print(self.request)
+        instance.save()
+
+        return super(Profile, self).form_valid(form)
+
 class RegisterCompany(CreateView):
     template_name = 'Index/register_company.html'
     form_class = CreateCompanyForm
@@ -129,24 +150,6 @@ class RegisterCompany(CreateView):
 
         return super(RegisterCompany, self).form_valid(form)
 
-
-# def register_company(request):
-#     if request.user.is_authenticated:
-#
-#         username = 36  # User.objects.get(pk=request.user.pk)
-#
-#         if request.method == "POST":
-#             form = CreateCompanyForm(request.POST, username)
-#
-#             if form.is_valid():
-#                 form.save(request)
-#                 return redirect('home')
-#
-#         else:
-#             form = CreateCompanyForm()
-#
-#     context = {'form': form}
-#     return render(request, "Index/register_company.html", context)
 
 
 def jobs(request):
