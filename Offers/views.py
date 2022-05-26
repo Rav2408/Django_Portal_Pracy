@@ -72,7 +72,7 @@ def user_register(request):
                 else:
                     messages.error(request, 'Invalid reCAPTCHA. Please try again.')
 
-                return redirect('home')
+                return redirect('register_company')
 
         else:
             form = CreateUserForm()  # to ta z polem emaila
@@ -110,8 +110,10 @@ def profile(request):
 
 def register_company(request):
     if request.user.is_authenticated:
+        username = request.user
+        user = User.objects.get(user=request.user)
         if request.method == "POST":
-            form = CreateCompanyForm(request.POST)
+            form = CreateCompanyForm(request.POST, user)
             if form.is_valid():
                 form.save(request)
                 return redirect('home')
@@ -145,3 +147,11 @@ def detail(request, offer_id):
 def offers_list(request):
     offersList = Offer.objects.all()
     return render(request, 'Offers/offers_list.html', {'offers_list': offersList})
+
+# class CandidateCompanyView(CreateView):
+#
+#     def form_valid(self, form):
+#         company = form.save(commit=False)
+#         company.user = User.objects.get(user=self.request.user)
+#         company.save()
+#         return HttpResponseRedirect(self.get_success_url())
