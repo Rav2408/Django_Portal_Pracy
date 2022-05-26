@@ -19,7 +19,7 @@ class CreateUserForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
-        feedback = forms.CharField(widget=forms.Textarea)
+        feedback = forms.CharField(widget=forms.Textarea, required=True)
         captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
     def save(self, commit=True):
@@ -49,6 +49,7 @@ class CreateOfferForm(forms.ModelForm):
         saved_data = super().save()
         request.session['new_offer_id'] = self.instance.id
         return saved_data
+
 
 class CreateCompanyForm(forms.ModelForm):
     class Meta:

@@ -108,12 +108,27 @@ def profile(request):
     context = {'form': form}
     return render(request, "Index/profile.html", context)
 
+
+# @login_required
 def register_company(request):
     if request.user.is_authenticated:
+
         if request.method == "POST":
             form = CreateCompanyForm(request.POST)
+
             if form.is_valid():
                 form.save(request)
+                company_name = form.cleaned_data.get('company_name')
+                city = form.cleaned_data.get('city')
+                street = form.cleaned_data.get('street')
+                street_number = form.cleaned_data.get('street_number')
+                postcode = form.cleaned_data.get('postcode')
+                suite_number = form.cleaned_data.get('suite_number')
+                email = form.cleaned_data.get('email')
+                social_links = form.cleaned_data.get('social_links')
+                logo = form.cleaned_data.get('logo')
+                phone = form.cleaned_data.get('phone') # niepotrzebne ale co tam
+
                 return redirect('home')
 
         else:
@@ -131,7 +146,7 @@ def jobs(request):
 def job_details(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
     company = get_object_or_404(Company, pk=offer.company_id)
-    return render(request, 'Offers/job-details.html', {'offer': offer, 'company':company})
+    return render(request, 'Offers/job-details.html', {'offer': offer, 'company': company})
 
 
 # /offer_id wyświetla stronę ze szczegółami na temat tej oferty
