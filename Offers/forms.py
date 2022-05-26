@@ -52,6 +52,7 @@ class CreateOfferForm(forms.ModelForm):
 
 
 class CreateCompanyForm(forms.ModelForm):
+
     class Meta:
         model = Company
         fields = [
@@ -67,8 +68,13 @@ class CreateCompanyForm(forms.ModelForm):
             'phone'
         ]
 
-    def save(self, request):
-        self.instance.author = request.user
-        saved_data = super().save()
-        request.session['new_company_id'] = self.instance.id
-        return saved_data
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     user = User.objects.get(username=request.user)
+    #     self.fields['user'].queryset = User.objects.filter(user = kwargs['user'])
+
+    # def save(self, request):
+    #     self.instance.author = request.user
+    #     saved_data = super().save()
+    #     request.session['new_company_id'] = self.instance.id
+    #     return saved_data

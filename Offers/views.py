@@ -8,13 +8,15 @@ from django.contrib.sites import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth.models import User
 from Django_Portal_Pracy import settings
 from .models import Offer, Company
 from .forms import CreateUserForm, CreateOfferForm, CreateCompanyForm
 # from .forms import OfferForm, CreateUserForm, CreateOfferForm
 from django.http import HttpResponse
 from django.contrib import messages
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 
 def user_login(request):
@@ -109,35 +111,42 @@ def profile(request):
     return render(request, "Index/profile.html", context)
 
 
-# @login_required
-def register_company(request):
-    if request.user.is_authenticated:
-        username = request.user
-        user = User.objects.get(user=request.user)
+class RegisterCompany(CreateView):
+    template_name = 'Index/register_company.html'
+    form_class = CreateCompanyForm
+    model = Company
+    success_url = reverse_lazy('home')
 
-        if request.method == "POST":
-            form = CreateCompanyForm(request.POST, user)
+    def get_object(self, queryset=None):
+        """This loads the profile of the currently logged in user"""
+        return User.objects.get(pk=self.request.user.pk)
 
-            if form.is_valid():
-                form.save(request)
-                company_name = form.cleaned_data.get('company_name')
-                city = form.cleaned_data.get('city')
-                street = form.cleaned_data.get('street')
-                street_number = form.cleaned_data.get('street_number')
-                postcode = form.cleaned_data.get('postcode')
-                suite_number = form.cleaned_data.get('suite_number')
-                email = form.cleaned_data.get('email')
-                social_links = form.cleaned_data.get('social_links')
-                logo = form.cleaned_data.get('logo')
-                phone = form.cleaned_data.get('phone') # niepotrzebne ale co tam
+    def form_valid(self, form):
+        """Here is where you set the user for the new profile"""
+        instance = form.instance  # This is the new object being saved
+        instance.user = self.request.user
+        instance.save()
 
-                return redirect('home')
+        return super(RegisterCompany, self).form_valid(form)
 
-        else:
-            form = CreateCompanyForm()
 
-    context = {'form': form}
-    return render(request, "Index/register_company.html", context)
+# def register_company(request):
+#     if request.user.is_authenticated:
+#
+#         username = 36  # User.objects.get(pk=request.user.pk)
+#
+#         if request.method == "POST":
+#             form = CreateCompanyForm(request.POST, username)
+#
+#             if form.is_valid():
+#                 form.save(request)
+#                 return redirect('home')
+#
+#         else:
+#             form = CreateCompanyForm()
+#
+#     context = {'form': form}
+#     return render(request, "Index/register_company.html", context)
 
 
 def jobs(request):
@@ -151,22 +160,4 @@ def job_details(request, offer_id):
     return render(request, 'Offers/job-details.html', {'offer': offer, 'company': company})
 
 
-# /offer_id wyświetla stronę ze szczegółami na temat tej oferty
-def detail(request, offer_id):
-    offer = get_object_or_404(Offer, pk=offer_id)
-    return render(request, 'Offers/detail.html', {'offer': offer})
 
-
-# tworzysz zmienną przechowującą liste obiektów a następnie
-# przekazujesz ją do pliku HTML pod nazwą zadeklarowaną w cudzysłowach (3 parametr render)
-def offers_list(request):
-    offersList = Offer.objects.all()
-    return render(request, 'Offers/offers_list.html', {'offers_list': offersList})
-
-# class CandidateCompanyView(CreateView):
-#
-#     def form_valid(self, form):
-#         company = form.save(commit=False)
-#         company.user = User.objects.get(user=self.request.user)
-#         company.save()
-#         return HttpResponseRedirect(self.get_success_url())

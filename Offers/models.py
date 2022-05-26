@@ -26,15 +26,15 @@ class Company(models.Model):
     def company_id(self):
         return self.id
 
-    def save(self, **kwargs):
-        super().save()
-
-        img = Image.open(self.logo.path)
-
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size) # resizes image (thumbnails are reduced-size versions of pictures)
-            img.save(self.logo.path)
+    # def save(self, **kwargs):
+    #     super().save()
+    #
+    #     img = Image.open(self.logo.path)
+    #
+    #     if img.height > 300 or img.width > 300:
+    #         output_size = (300, 300)
+    #         img.thumbnail(output_size) # resizes image (thumbnails are reduced-size versions of pictures)
+    #         img.save(self.logo.path)
 
 
 class Offer(models.Model):
