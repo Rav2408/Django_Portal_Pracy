@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Offer, Company
+from .models import Offer, Company, Application
 
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
@@ -44,9 +44,7 @@ class CreateOfferForm(forms.ModelForm):
         ]
 
 
-
 class CreateCompanyForm(forms.ModelForm):
-
     class Meta:
         model = Company
         fields = [
@@ -62,3 +60,8 @@ class CreateCompanyForm(forms.ModelForm):
             'phone'
         ]
 
+
+class CreateApplicationForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        exclude = ['offer']

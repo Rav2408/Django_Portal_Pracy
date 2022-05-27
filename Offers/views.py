@@ -9,11 +9,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
+
 from Django_Portal_Pracy import settings
-from .models import Offer, Company
-from .forms import CreateUserForm, CreateOfferForm, CreateCompanyForm
-# from .forms import OfferForm, CreateUserForm, CreateOfferForm
-from django.http import HttpResponse
+from .models import Offer, Company, Application
+from .forms import CreateUserForm, CreateOfferForm, CreateCompanyForm, CreateApplicationForm
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -127,7 +127,6 @@ class Profile(CreateView):
         instance = form.instance  # This is the new object being saved
         company = get_object_or_404(Company, user=self.request.user.pk)
         instance.company = company
-        print(self.request)
         instance.save()
 
         return super(Profile, self).form_valid(form)
@@ -149,6 +148,46 @@ class RegisterCompany(CreateView):
         instance.save()
 
         return super(RegisterCompany, self).form_valid(form)
+
+
+class ApplyForJob(View):
+    template_name = 'Offers/apply-for-job.html'
+    form = CreateApplicationForm
+    model = Application
+    success_url = reverse_lazy('home')
+    offer_id = None
+
+    def get(self, request, *args, **kwargs):
+        context = {'form': self.form, 'offer_id': self.kwargs['offer_id']}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        instance = self.form.instance  # This is the new object being saved
+        offer_id = self.kwargs['offer_id']
+        instance.offer = get_object_or_404(Offer, pk=offer_id)
+        instance.save()
+        return redirect("home")
+
+    # def get_queryset(self):
+    #     self.offer_id = self.kwargs['offer_id']
+    #     print(self.offer_id)
+    #     queryset = super(ApplyForJob, self).get_queryset()
+    #     return queryset
+
+    def get_object(self, queryset=None):
+        print('Hello World')
+        return queryset.get(offer=self.offer)
+
+    def form_valid(self, form):
+        """Here is where you set the user for the new profile"""
+        instance = form.instance  # This is the new object being saved
+        offer_id = self.kwargs['offer_id']
+        print(offer_id)
+        print('Hello World2')
+        instance.offer = get_object_or_404(Offer,pk=offer_id)
+        instance.save()
+
+        return super(ApplyForJob, self).form_valid(form)
 
 
 

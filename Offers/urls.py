@@ -8,6 +8,7 @@ urlpatterns = [
     path("logout/", views.logout_view, name='logout_view'),
     path('jobs/', views.jobs, name='jobs'),
     path('jobs/job-details/<int:offer_id>/', views.job_details, name='job-details'),
+    path('jobs/job-details/<int:offer_id>/apply-for-job', views.ApplyForJob.as_view(), name='apply-for-job'),
     path('login/', views.user_login, name='login'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),

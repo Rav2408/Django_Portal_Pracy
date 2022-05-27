@@ -53,6 +53,15 @@ class Offer(models.Model):
         return self.id
 
 class Application(models.Model):
-    offer = models.OneToOneField(Offer, on_delete=DO_NOTHING)  # on_delete
-    user = models.OneToOneField(Company, on_delete=DO_NOTHING)
-    response = models.CharField('response', max_length=50, blank=True)
+    offer = models.OneToOneField(Offer, on_delete=DO_NOTHING)
+    first_name = models.CharField(('first name'), max_length=30, blank=False, default=None)
+    last_name = models.CharField(('last name'), max_length=30, blank=False, default=None)
+    email = models.EmailField('email', blank=True, default=None)
+    cv = models.FileField(upload_to='uploads/', default=None)
+    reason = models.TextField('reason', max_length=2000, blank=True, null=True)
+
+    def __str__(self):
+        return self.offer
+
+    def offer_id(self):
+        return self.id
