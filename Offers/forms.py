@@ -20,7 +20,7 @@ class CreateUserForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
         feedback = forms.CharField(widget=forms.Textarea, required=True)
-        captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+        captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox, required=True)
 
     def save(self, commit=True):
         user = super(CreateUserForm, self).save(commit=False)

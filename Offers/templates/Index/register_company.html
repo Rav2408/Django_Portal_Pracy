@@ -25,6 +25,16 @@
         <div class="text-center">
             <br>
             <br>
+
+             {% if messages %}
+                  <ul class="messages" >
+                      {% for message in messages %}
+                      <li class="{{message.tags}}"> {{message}}</li>
+                      {% endfor %}
+                  </ul>
+                {% endif %}
+
+
             <!-- FORMY DJANGO DO TWORZENIA OFERTY -->
             <form method="post" enctype="multipart/form-data" action="{% url 'register_company' %}">
                 <h2>Add your information</h2>

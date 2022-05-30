@@ -68,11 +68,12 @@ def user_register(request):
                     form.save()
                     username = form.cleaned_data.get('username')
                     password = form.cleaned_data.get('password1')
-                    messages.success(request, 'Account was created for ' + username)
+
                     user = authenticate(username=username, password=password)
                     login(request, user)
                 else:
                     messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+                    return redirect('register')
 
                 return redirect('register_company')
 
@@ -121,8 +122,10 @@ def profile(request):
 
 
 def registerCompany(request, *args, **kwargs):
+
     if request.method == "POST":
         form = CreateCompanyForm(request.POST, request.FILES)
+        messages.success(request, 'Account was created!')
         if form.is_valid():
             logo = None
             if request.FILES:

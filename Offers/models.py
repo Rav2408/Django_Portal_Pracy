@@ -8,7 +8,7 @@ from django.db.models import DO_NOTHING
 
 
 class Company(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None) ######defaul true bo null value in column "user_id" violates not-null constraint i django podpowiedzialo
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
     company_name = models.CharField('company_name', max_length=30, blank=False)
     city = models.CharField('city', max_length=20, blank=False)
     street = models.CharField('street', max_length=20, blank=False)
@@ -51,6 +51,7 @@ class Offer(models.Model):
 
     def offer_id(self):
         return self.id
+
 
 class Application(models.Model):
     offer = models.ForeignKey(Offer, on_delete=DO_NOTHING)
