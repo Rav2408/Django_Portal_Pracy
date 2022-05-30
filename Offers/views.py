@@ -101,16 +101,13 @@ def profile(request):
         if request.method == "POST":
             form = CreateOfferForm(request.POST)
             if form.is_valid():
-                remote = True
-                if request.POST.get('remote') is None:
-                    remote = False
                 offer = Offer(company=get_object_or_404(Company, user=request.user.pk),
-                              position=request.POST.get('position'),
-                              min_salary=request.POST.get('min_salary'),
-                              max_salary=request.POST.get('max_salary'),
-                              remote=remote,
-                              location=request.POST.get('location'),
-                              description=request.POST.get('description')
+                              position=form.cleaned_data['position'],
+                              min_salary=form.cleaned_data['min_salary'],
+                              max_salary=form.cleaned_data['max_salary'],
+                              remote=form.cleaned_data['remote'],
+                              location=form.cleaned_data['location'],
+                              description=form.cleaned_data['description']
                               )
 
                 offer.save()
@@ -127,16 +124,19 @@ def registerCompany(request, *args, **kwargs):
     if request.method == "POST":
         form = CreateCompanyForm(request.POST, request.FILES)
         if form.is_valid():
-            company = Company(company_name=request.POST.get('company_name'),
-                              city=request.POST.get('city'),
-                              street=request.POST.get('street'),
-                              street_number=request.POST.get('street_number'),
-                              postcode=request.POST.get('postcode'),
-                              suite_number=request.POST.get('suite_number'),
-                              email=request.POST.get('email'),
-                              social_links=request.POST.get('social_links'),
-                              logo=request.FILES['logo'],
-                              phone=request.POST.get('phone'),
+            logo = None
+            if request.FILES:
+                logo = request.FILES['logo']
+            company = Company(company_name=form.cleaned_data['company_name'],
+                              city=form.cleaned_data['city'],
+                              street=form.cleaned_data['street'],
+                              street_number=form.cleaned_data['street_number'],
+                              postcode=form.cleaned_data['postcode'],
+                              suite_number=form.cleaned_data['suite_number'],
+                              email=form.cleaned_data['email'],
+                              social_links=form.cleaned_data['social_links'],
+                              logo=logo,
+                              phone=form.cleaned_data['phone'],
                               user=User.objects.get(pk=request.user.pk)
                               )
             company.save()
@@ -154,11 +154,11 @@ def applyForJob(request, *args, **kwargs):
         form = CreateApplicationForm(request.POST, request.FILES)
         offer_id = kwargs['offer_id']
         if form.is_valid():
-            application = Application(first_name=request.POST.get('first_name'),
-                                      last_name=request.POST.get('last_name'),
-                                      email=request.POST.get('email'),
+            application = Application(first_name=form.cleaned_data['first_name'],
+                                      last_name=form.cleaned_data['last_name'],
+                                      email=form.cleaned_data['email'],
                                       cv=request.FILES['cv'],
-                                      reason=request.POST.get('reason'),
+                                      reason=form.cleaned_data['reason'],
                                       offer=get_object_or_404(Offer, pk=offer_id)
                                       )
             application.save()
