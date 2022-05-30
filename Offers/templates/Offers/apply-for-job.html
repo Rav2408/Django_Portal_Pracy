@@ -26,7 +26,7 @@
             <br>
             <br>
             <!-- FORMY DJANGO DO TWORZENIA OFERTY -->
-            <form method="post" action="{% url 'apply-for-job' offer_id %}">
+            <form method="post" enctype="multipart/form-data" action="{% url 'apply-for-job' offer_id %}">
                 <h2>Fill the form:</h2>
                 <br>
               {% csrf_token %}

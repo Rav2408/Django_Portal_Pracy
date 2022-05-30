@@ -25,4 +25,4 @@ class OfferAdmin(admin.ModelAdmin):
 
 @admin.register(Application)
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ['offer']
+    list_display = ['offer','first_name', 'last_name', 'email', 'cv']

@@ -101,7 +101,19 @@ def profile(request):
         if request.method == "POST":
             form = CreateOfferForm(request.POST)
             if form.is_valid():
-                form.save(request)
+                remote = True
+                if request.POST.get('remote') is None:
+                    remote = False
+                offer = Offer(company=get_object_or_404(Company, user=request.user.pk),
+                              position=request.POST.get('position'),
+                              min_salary=request.POST.get('min_salary'),
+                              max_salary=request.POST.get('max_salary'),
+                              remote=remote,
+                              location=request.POST.get('location'),
+                              description=request.POST.get('description')
+                              )
+
+                offer.save()
                 return redirect('home')
 
         else:
@@ -111,84 +123,52 @@ def profile(request):
     return render(request, "Index/profile.html", context)
 
 
-class Profile(CreateView):
-    template_name = 'Index/profile.html'
-    form_class = CreateOfferForm
-    model = Offer
-    success_url = reverse_lazy('home')
+def registerCompany(request, *args, **kwargs):
+    if request.method == "POST":
+        form = CreateCompanyForm(request.POST, request.FILES)
+        if form.is_valid():
+            company = Company(company_name=request.POST.get('company_name'),
+                              city=request.POST.get('city'),
+                              street=request.POST.get('street'),
+                              street_number=request.POST.get('street_number'),
+                              postcode=request.POST.get('postcode'),
+                              suite_number=request.POST.get('suite_number'),
+                              email=request.POST.get('email'),
+                              social_links=request.POST.get('social_links'),
+                              logo=request.FILES['logo'],
+                              phone=request.POST.get('phone'),
+                              user=User.objects.get(pk=request.user.pk)
+                              )
+            company.save()
+            return redirect('home')
 
-    def get_object(self, queryset=None):
-        """This loads the profile of the currently logged in user"""
-        print(self.request)
-        return Company.objects.get(pk=self.request.company.pk)
+    else:
+        form = CreateCompanyForm()
 
-    def form_valid(self, form):
-        """Here is where you set the user for the new profile"""
-        instance = form.instance  # This is the new object being saved
-        company = get_object_or_404(Company, user=self.request.user.pk)
-        instance.company = company
-        instance.save()
-
-        return super(Profile, self).form_valid(form)
-
-class RegisterCompany(CreateView):
-    template_name = 'Index/register_company.html'
-    form_class = CreateCompanyForm
-    model = Company
-    success_url = reverse_lazy('home')
-
-    def get_object(self, queryset=None):
-        """This loads the profile of the currently logged in user"""
-        return User.objects.get(pk=self.request.user.pk)
-
-    def form_valid(self, form):
-        """Here is where you set the user for the new profile"""
-        instance = form.instance  # This is the new object being saved
-        instance.user = self.request.user
-        instance.save()
-
-        return super(RegisterCompany, self).form_valid(form)
+    context = {'form': form}
+    return render(request, 'Index/register_company.html', context)
 
 
-class ApplyForJob(View):
-    template_name = 'Offers/apply-for-job.html'
-    form = CreateApplicationForm
-    model = Application
-    success_url = reverse_lazy('home')
-    offer_id = None
+def applyForJob(request, *args, **kwargs):
+    if request.method == "POST":
+        form = CreateApplicationForm(request.POST, request.FILES)
+        offer_id = kwargs['offer_id']
+        if form.is_valid():
+            application = Application(first_name=request.POST.get('first_name'),
+                                      last_name=request.POST.get('last_name'),
+                                      email=request.POST.get('email'),
+                                      cv=request.FILES['cv'],
+                                      reason=request.POST.get('reason'),
+                                      offer=get_object_or_404(Offer, pk=offer_id)
+                                      )
+            application.save()
+            return redirect('home')
 
-    def get(self, request, *args, **kwargs):
-        context = {'form': self.form, 'offer_id': self.kwargs['offer_id']}
-        return render(request, self.template_name, context)
+    else:
+        form = CreateApplicationForm()
 
-    def post(self, request, *args, **kwargs):
-        instance = self.form.instance  # This is the new object being saved
-        offer_id = self.kwargs['offer_id']
-        instance.offer = get_object_or_404(Offer, pk=offer_id)
-        instance.save()
-        return redirect("home")
-
-    # def get_queryset(self):
-    #     self.offer_id = self.kwargs['offer_id']
-    #     print(self.offer_id)
-    #     queryset = super(ApplyForJob, self).get_queryset()
-    #     return queryset
-
-    def get_object(self, queryset=None):
-        print('Hello World')
-        return queryset.get(offer=self.offer)
-
-    def form_valid(self, form):
-        """Here is where you set the user for the new profile"""
-        instance = form.instance  # This is the new object being saved
-        offer_id = self.kwargs['offer_id']
-        print(offer_id)
-        print('Hello World2')
-        instance.offer = get_object_or_404(Offer,pk=offer_id)
-        instance.save()
-
-        return super(ApplyForJob, self).form_valid(form)
-
+    context = {'form': form, 'offer_id': kwargs['offer_id']}
+    return render(request, "Offers/apply-for-job.html", context)
 
 
 def jobs(request):
@@ -200,6 +180,3 @@ def job_details(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
     company = get_object_or_404(Company, pk=offer.company_id)
     return render(request, 'Offers/job-details.html', {'offer': offer, 'company': company})
-
-
-

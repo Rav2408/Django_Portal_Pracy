@@ -26,15 +26,15 @@ class Company(models.Model):
     def company_id(self):
         return self.id
 
-    # def save(self, **kwargs):
-    #     super().save()
-    #
-    #     img = Image.open(self.logo.path)
-    #
-    #     if img.height > 300 or img.width > 300:
-    #         output_size = (300, 300)
-    #         img.thumbnail(output_size) # resizes image (thumbnails are reduced-size versions of pictures)
-    #         img.save(self.logo.path)
+    def save(self, *args, **kwargs):
+        super().save()
+
+        img = Image.open(self.logo.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size) # resizes image (thumbnails are reduced-size versions of pictures)
+            img.save(self.logo.path)
 
 
 class Offer(models.Model):
@@ -42,18 +42,18 @@ class Offer(models.Model):
     position = models.CharField('position', max_length=20, blank=False)
     min_salary = models.IntegerField(blank=True)
     max_salary = models.IntegerField(blank=True)
-    remote = models.BooleanField()
+    remote = models.BooleanField(default=False)
     location = models.CharField('location', max_length=50, blank=False)
     description = models.TextField(blank=True)
 
     def __str__(self):
-        return self.company
+        return str(self.id)
 
     def offer_id(self):
         return self.id
 
 class Application(models.Model):
-    offer = models.OneToOneField(Offer, on_delete=DO_NOTHING)
+    offer = models.ForeignKey(Offer, on_delete=DO_NOTHING)
     first_name = models.CharField(('first name'), max_length=30, blank=False, default=None)
     last_name = models.CharField(('last name'), max_length=30, blank=False, default=None)
     email = models.EmailField('email', blank=True, default=None)
@@ -65,3 +65,12 @@ class Application(models.Model):
 
     def offer_id(self):
         return self.id
+
+    # def save(self, *args, **kwargs):
+    #     super().save()
+    #     img = Image.open(self.logo.path)
+    #
+    #     if img.height > 300 or img.width > 300:
+    #         output_size = (300, 300)
+    #         img.thumbnail(output_size) # resizes image (thumbnails are reduced-size versions of pictures)
+    #         img.save(self.logo.path)

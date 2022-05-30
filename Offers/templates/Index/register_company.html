@@ -26,7 +26,7 @@
             <br>
             <br>
             <!-- FORMY DJANGO DO TWORZENIA OFERTY -->
-            <form method="post" action="{% url 'register_company' %}">
+            <form method="post" enctype="multipart/form-data" action="{% url 'register_company' %}">
                 <h2>Add your information</h2>
                 <br>
               {% csrf_token %}
