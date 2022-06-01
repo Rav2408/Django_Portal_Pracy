@@ -98,6 +98,18 @@ def contact(request):
 
 
 def profile(request):
+    company = get_object_or_404(Company, user=request.user.pk)
+    offer_list = Offer.objects.filter(company=company)
+    application_count = {}
+    for i in offer_list:
+        application_count[i.id] = Application.objects.filter(offer_id=i.id).count()
+    print(application_count)
+#[get_object_or_404(Application, id=3)]
+    return render(request, 'Index/profile.html', {'company': company, 'offers_lists': offer_list,
+                                                  'application_count': application_count})
+
+
+def addoffer(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             form = CreateOfferForm(request.POST)
@@ -118,7 +130,7 @@ def profile(request):
             form = CreateOfferForm()
 
     context = {'form': form}
-    return render(request, "Index/profile.html", context)
+    return render(request, "Index/addoffer.html", context)
 
 
 def registerCompany(request, *args, **kwargs):

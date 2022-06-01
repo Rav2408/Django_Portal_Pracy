@@ -1,5 +1,6 @@
 {% extends 'Index/base.html' %}
 {% load static %}
+{% load dict %}
 {% block head %}
 {% endblock %}
 {% block body %}
@@ -11,7 +12,7 @@
                         <br>
                         <br>
                         <br>
-                        <h2>your <em>profile</em></h2>
+                        <h2>Welcome, <em>{{company.company_name}}</em></h2>
                         <br>
                         <br>
                     </div>
@@ -24,41 +25,21 @@
     <section>
         <div class="text-center">
             <br>
+            <div class="main-button">
+                <a href="{% url 'addoffer' %}">Add a new offer</a>
+            </div>
             <br>
-            <!-- FORMY DJANGO DO TWORZENIA OFERTY -->
-            <form method="post" action="{% url 'profile' %}">
-                <h2>Add new offer</h2>
-                <br>
-              {% csrf_token %}
-
-                {% if form.errors %}
-                  <p>{{form.errors}}</p>
-                  {% endif %}
-
-
-              <p>{{form.position.label}}
-              {{form.position}}</p>
-                <br>
-              <p>{{form.min_salary.label}}
-              {{form.min_salary}}</p>
-                <br>
-              <p>{{form.max_salary.label}}
-              {{form.max_salary}}</p>
-                <br>
-                     <p>{{form.remote.label}}
-              {{form.remote}}</p>
-                <br>
-                     <p>{{form.location.label}}
-              {{form.location}}</p>
-                <br>
-                     <p>{{form.description.label}}
-              {{form.description}}</p>
-                <br>
-
-               <p><input type="submit" class="main-button"  value="Add"></p>
-              <input type="hidden" name="next" value="{{ next }}">
-
-            </form>
+            <h3><em>Your offers</em></h3>
+            <br>
+            {% for offer in offers_lists %}
+                <div class="cta-content">
+                    <div class="down-content">
+                        <h4>{{ offer.position }}</h4>
+                        <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} {{offer.id}} {{application_count}} </span>
+                            {{ application_count|get_item:offer.id }}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </section>
     <!-- ***** Features Item End ***** -->

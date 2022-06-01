@@ -1,0 +1,66 @@
+{% extends 'Index/base.html' %}
+{% load static %}
+{% block head %}
+{% endblock %}
+{% block body %}
+    <section class="section section-bg" id="call-to-action" style="background-image: url({% static 'images/about-fullscreen-1-1920x700.jpg' %})">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="cta-content">
+                        <br>
+                        <br>
+                        <br>
+                        <h2>Add a new <em>offer</em></h2>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ***** Features Item Start ***** -->
+    <section>
+        <div class="text-center">
+            <br>
+            <br>
+            <!-- FORMY DJANGO DO TWORZENIA OFERTY -->
+            <form method="post" action="{% url 'profile' %}">
+                <h2>Add new offer</h2>
+                <br>
+              {% csrf_token %}
+
+                {% if form.errors %}
+                  <p>{{form.errors}}</p>
+                  {% endif %}
+
+
+              <p>{{form.position.label}}
+              {{form.position}}</p>
+                <br>
+              <p>{{form.min_salary.label}}
+              {{form.min_salary}}</p>
+                <br>
+              <p>{{form.max_salary.label}}
+              {{form.max_salary}}</p>
+                <br>
+                     <p>{{form.remote.label}}
+              {{form.remote}}</p>
+                <br>
+                     <p>{{form.location.label}}
+              {{form.location}}</p>
+                <br>
+                     <p>{{form.description.label}}
+              {{form.description}}</p>
+                <br>
+
+               <p><input type="submit" class="main-button"  value="Add"></p>
+              <input type="hidden" name="next" value="{{ next }}">
+
+            </form>
+        </div>
+    </section>
+    <!-- ***** Features Item End ***** -->
+
+{% endblock %}
