@@ -177,7 +177,12 @@
                             <div class="trainer-item">
                                 <div class="image-thumb">
                                     {% with logo_dict|get_item:offer as image_static %}
-                                        <img src="{% static image_static %}" alt="">
+
+                                        {% if not image_static %}
+                                            <img src="{% static 'images/product-1-720x480.jpg' %}" alt="">
+                                        {% else %}
+                                            <img src="{% static image_static %}" alt="">
+                                        {% endif %}
                                     {% endwith %}
                                 </div>
                                 <div class="down-content">

@@ -193,7 +193,10 @@ def jobs(request):
     logo_dict = {}
     for offer in offersList:
         company = get_object_or_404(Company, pk = offer.company_id)
-        logo_dict[offer] = company.logo
+        path = str(company.logo)
+        if path.__contains__("Offers/static"):
+            path = path.replace("Offers/static/", "", 1)
+        logo_dict[offer] = path
     return render(request, "Offers/jobs.html", {'offers_list': offersList, 'logo_dict': logo_dict})
 
 
