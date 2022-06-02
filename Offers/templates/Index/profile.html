@@ -29,14 +29,20 @@
                 <a href="{% url 'addoffer' %}">Add a new offer</a>
             </div>
             <br>
-            <h3><em>Your offers</em></h3>
+            <h3 style="color:#ed563b">Your offers</h3>
             <br>
             {% for offer in offers_lists %}
                 <div class="cta-content">
                     <div class="down-content">
                         <h4>{{ offer.position }}</h4>
-                        <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} {{offer.id}} {{application_count}} </span>
-                            {{ application_count|get_item:offer.id }}
+                        <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} </span>
+                        <h6> Applications: {{ application_count|get_item:offer.id }}  </h6>
+                        {% for app in application_list %}
+                                <p>{{ app.first_name }}{{ app.last_name }}</p>
+                            {% endfor %}
+
+
+                        <br>
                     </div>
                 </div>
             {% endfor %}

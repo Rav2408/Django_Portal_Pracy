@@ -100,13 +100,14 @@ def contact(request):
 def profile(request):
     company = get_object_or_404(Company, user=request.user.pk)
     offer_list = Offer.objects.filter(company=company)
+    application_list = []
     application_count = {}
     for i in offer_list:
+        application_list = Application.objects.all().filter(offer_id=i.id)
         application_count[i.id] = Application.objects.filter(offer_id=i.id).count()
-    print(application_count)
-#[get_object_or_404(Application, id=3)]
     return render(request, 'Index/profile.html', {'company': company, 'offers_lists': offer_list,
-                                                  'application_count': application_count})
+                                                  'application_count': application_count,
+                                                  'application_list': application_list})
 
 
 def addoffer(request):

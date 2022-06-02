@@ -26,7 +26,7 @@
             <br>
             <br>
             <!-- FORMY DJANGO DO TWORZENIA OFERTY -->
-            <form method="post" action="{% url 'profile' %}">
+            <form method="post" action="{% url 'addoffer' %}">
                 <h2>Add new offer</h2>
                 <br>
               {% csrf_token %}
@@ -56,7 +56,7 @@
                 <br>
 
                <p><input type="submit" class="main-button"  value="Add"></p>
-              <input type="hidden" name="next" value="{{ next }}">
+
 
             </form>
         </div>
