@@ -12,7 +12,7 @@
                         <br>
                         <br>
                         <br>
-                        <h2>Welcome, <em>{{company.company_name}}</em></h2>
+                        <h2>Welcome, <em>{{user.username}}</em></h2>
                         <br>
                         <br>
                     </div>
@@ -23,30 +23,99 @@
 
     <!-- ***** Features Item Start ***** -->
     <section>
+      <div class="container">
         <div class="text-center">
+
             <br>
-            <div class="main-button">
-                <a href="{% url 'addoffer' %}">Add a new offer</a>
-            </div>
             <br>
-            <h3 style="color:#ed563b">Your offers</h3>
+            <h3 style="color:#ed563b">Overview: </h3>
             <br>
-            {% for offer in offers_lists %}
+             <div class="row">
+
+                        <div class="col-sm-6">
+                            <h4 style="color:#ed563b">You: </h4>
+                            <br>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <h4 style="color:#ed563b">Company: </h4>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label>Name:</label>
+                            <p>{{company.user}}</p>
+                            <br>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label>Company name:</label>
+                            <p>{{company.company_name}}</p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label>Email:</label>
+                            <p>{{user.email}}</p>
+                            <br>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Email:</label>
+                            <p>{{company.email}}</p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <br>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <label>Address:</label>
+                            <p>{{company.city}}, {{company.street}} {{company.street_number}}</p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <br>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <label>Company city:</label>
+                            <p>{{company.city}}</p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <br>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <label>Company city:</label>
+                            <p>{{company.city}}</p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <br>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <label>Company city:</label>
+                            <p>{{company.city}}</p>
+                        </div>
+                    </div>
                 <div class="cta-content">
                     <div class="down-content">
-                        <h4>{{ offer.position }}</h4>
-                        <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} </span>
-                        <h6> Applications: {{ application_count|get_item:offer.id }}  </h6>
-                        {% for app in application_list %}
-                                <p>{{ app.first_name }}{{ app.last_name }}</p>
-                            {% endfor %}
-
+                        Username: {{ user.username }}
+                        <br>
+                        Email: {{ user.email }}
+                        <br>
+                        Company name: {{company.company_name}}
 
                         <br>
+                        <br>
+                        <br>
                     </div>
+                  <div class="main-button">
+                    <a href="{% url 'addoffer' %}">Edit your profile</a>
+                  </div>
                 </div>
-            {% endfor %}
         </div>
+      </div>
     </section>
     <!-- ***** Features Item End ***** -->
 
