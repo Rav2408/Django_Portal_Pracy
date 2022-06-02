@@ -1,5 +1,6 @@
 {% extends 'Index/base.html' %}
 {% load static %}
+{% load dict %}
 {% block head %}
 {% endblock %}
 {% block body %}
@@ -175,7 +176,9 @@
                         <div class="col-md-6">
                             <div class="trainer-item">
                                 <div class="image-thumb">
-                                    <img src="{% static 'images/product-1-720x480.jpg' %}" alt="">
+                                    {% with logo_dict|get_item:offer as image_static %}
+                                        <img src="{% static image_static %}" alt="">
+                                    {% endwith %}
                                 </div>
                                 <div class="down-content">
                                     <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} </span>

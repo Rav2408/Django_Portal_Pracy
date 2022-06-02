@@ -5,6 +5,7 @@ from PIL import Image
 # ctrl + alt + shift + l
 # Create your models here.
 from django.db.models import DO_NOTHING
+from django.utils.safestring import mark_safe
 
 
 class Company(models.Model):
@@ -17,7 +18,7 @@ class Company(models.Model):
     suite_number = models.IntegerField(blank=True, null=True)
     email = models.EmailField('email', blank=False)
     social_links = models.URLField(null=True)
-    logo = models.ImageField(upload_to="logo/", null=True, blank=True, default=None)
+    logo = models.ImageField(upload_to="Offers/static/logo", null=True, blank=True, default=None)
     phone = models.CharField('phone', max_length=20, blank=False, default=None)
 
     def __str__(self):
@@ -25,6 +26,9 @@ class Company(models.Model):
 
     def company_id(self):
         return self.id
+
+        # def image_tag(self):  # new
+        #     return mark_safe('<img src="/../../static/logo/%s" width="150" height="150" />' % (self.logo))
 
     # def save(self, *args, **kwargs):
     #     super().save()

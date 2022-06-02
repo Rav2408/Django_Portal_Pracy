@@ -189,7 +189,12 @@ def applyForJob(request, *args, **kwargs):
 
 def jobs(request):
     offersList = Offer.objects.all()
-    return render(request, "Offers/jobs.html", {'offers_list': offersList})
+    #trzeba stworzyć tu słownik ofert z ich zdjęciami
+    logo_dict = {}
+    for offer in offersList:
+        company = get_object_or_404(Company, pk = offer.company_id)
+        logo_dict[offer] = company.logo
+    return render(request, "Offers/jobs.html", {'offers_list': offersList, 'logo_dict': logo_dict})
 
 
 def job_details(request, offer_id):
