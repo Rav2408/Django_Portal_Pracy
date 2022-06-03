@@ -109,12 +109,15 @@ def company_profile(request):
     application_list = []
     application_count = {}
     for i in offer_list:
-        application_list = Application.objects.all().filter(offer_id=i.id)
+        list = Application.objects.all().filter(offer_id=i.id)
+        for app in list:
+            application_list.append(app)
         application_count[i.id] = Application.objects.filter(offer_id=i.id).count()
     return render(request, 'Index/company_profile.html', {'company': company, 'offers_lists': offer_list,
                                                   'application_count': application_count,
                                                   'application_list': application_list})
-
+# def przekaż_aplikacje_na_dana_oferte():
+#     ret
 
 def addoffer(request):
     if request.user.is_authenticated:

@@ -38,8 +38,10 @@
                         <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} </span>
                         <h6> Applications: {{ application_count|get_item:offer.id }}  </h6>
                         {% for app in application_list %}
-                                <p>{{ app.first_name }}{{ app.last_name }}</p>
-                            {% endfor %}
+                            {% if app.offer.id == offer.id %}
+                                <h6>{{ app.first_name }}{{ app.last_name }}</h6>
+                            {% endif %}
+                        {% endfor %}
 
 
                         <br>
