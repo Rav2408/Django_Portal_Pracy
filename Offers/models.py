@@ -28,6 +28,7 @@ class Company(models.Model):
     def company_id(self):
         return self.id
 
+
         # def image_tag(self):  # new
         #     return mark_safe('<img src="/../../static/logo/%s" width="150" height="150" />' % (self.logo))
 

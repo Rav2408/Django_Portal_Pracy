@@ -173,6 +173,67 @@ def registerCompany(request, *args, **kwargs):
     context = {'form': form}
     return render(request, 'Index/register_company.html', context)
 
+def edit_company(request, *args, **kwargs):
+
+    instance = Company.objects.get(user=request.user.pk)
+    if request.method == "POST":
+        form = CreateCompanyForm(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            instance.company_name  = form.cleaned_data['company_name']
+            instance.city          = form.cleaned_data['city']
+            instance.street        = form.cleaned_data['street']
+            instance.street_number = form.cleaned_data['street_number']
+            instance.postcode      = form.cleaned_data['postcode']
+            instance.suite_number  = form.cleaned_data['suite_number']
+            instance.email         = form.cleaned_data['email']
+            instance.social_links  = form.cleaned_data['social_links']
+            instance.logo          = form.cleaned_data['logo']
+            instance.phone         = form.cleaned_data['phone']
+            instance.save(update_fields=['company_name',
+                                         'city',
+                                         'street',
+                                         'street_number',
+                                         'postcode',
+                                         'suite_number',
+                                         'email',
+                                         'social_links',
+                                         'logo',
+                                         'phone'])
+
+
+            #instance.update(name=request.POST.get.cleaned_data['company_name'])
+            return redirect('profile')
+    else:
+        form = CreateCompanyForm(instance=instance)
+
+    # if request.method == "POST":
+    #     form = CreateCompanyForm(request.POST, request.FILES)
+    #     messages.success(request, 'Account was created!')
+    #     if form.is_valid():
+    #         logo = None
+    #         if request.FILES:
+    #             logo = request.FILES['logo']
+    #         company = Company(company_name=form.cleaned_data['company_name'],
+    #                           city=form.cleaned_data['city'],
+    #                           street=form.cleaned_data['street'],
+    #                           street_number=form.cleaned_data['street_number'],
+    #                           postcode=form.cleaned_data['postcode'],
+    #                           suite_number=form.cleaned_data['suite_number'],
+    #                           email=form.cleaned_data['email'],
+    #                           social_links=form.cleaned_data['social_links'],
+    #                           logo=logo,
+    #                           phone=form.cleaned_data['phone'],
+    #                           user=User.objects.get(pk=request.user.pk)
+    #                           )
+    #         company.save()
+    #         return redirect('home')
+    #
+    # else:
+    #     form = CreateCompanyForm()
+
+    context = {'form': form}
+    return render(request, 'Index/edit_company.html', context)
+
 
 def applyForJob(request, *args, **kwargs):
     if request.method == "POST":
