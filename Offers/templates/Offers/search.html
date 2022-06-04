@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col-lg-4">
 
-                    <form method="post" action="{% url 'search' %}">
+                    <form method="GET" action="{% url 'search' %}">
 
                          <h5 style="margin-bottom: 15px">Salary</h5>
 
@@ -81,17 +81,6 @@
                               </label>
                          </div>
 
-<!--                        &lt;!&ndash; Z ICH PORJEKTU TEST &ndash;&gt;-->
-<!--                        <div class="form-group col-md-4">-->
-<!--                            <label for="tags">Tag (must have)</label>-->
-<!--                                <select id="tags" class="form-control" name=tags>-->
-<!--                                      <option selected>Choose...</option>-->
-<!--                                         {% for tag in tag_set %}-->
-<!--                                      <option value="{{tag.name}}">{{tag.name}}</option>-->
-<!--                                          {% endfor %}-->
-<!--                                </select>-->
-<!--                        </div>-->
-<!--                        &lt;!&ndash; KONIEC &ndash;&gt;-->
 
                          <div>
                               <label>
@@ -106,7 +95,8 @@
 
                         <p>&nbsp;</p>
                         <div class="main-button">
-                            <a href="{% url 'search' %}">Search</a>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                            <!-- <a href="{% url 'search' %}">Search</a> -->
                         </div>
                     </form>
                     
@@ -115,51 +105,45 @@
 
                 <div class="col-lg-8">
                     <div class="row">
+                        {% if offers2 %}
+                            {% for offer in offers2 %}
 
-                        {% if queryset %}
-                        <h3>Offerts that match criterias:</h3> <hr>
-                        {% for offer in queryset %}
+                            <div class="col-md-6">
+                                <div class="trainer-item">
+                                    <div class="image-thumb">
+                                        {% with logo_dict|get_item:offer as image_static %}
 
+                                            {% if not image_static %}
+                                                <img src="{% static 'images/logo_przykładowe.jpg' %}" alt="">
+                                            {% else %}
+                                                <img src="{% static image_static %}" alt="">
+                                            {% endif %}
+                                        {% endwith %}
+                                    </div>
+                                    <div class="down-content">
+                                        <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} </span>
 
+                                        <h4>{{ offer.position }}</h4>
 
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    {% with logo_dict|get_item:offer as image_static %}
+                                        <p>{{ offer.company}} - {{ offer.location }}</p>
 
-                                        {% if not image_static %}
-                                            <img src="{% static 'images/logo_przykładowe.jpg' %}" alt="">
-                                        {% else %}
-                                            <img src="{% static image_static %}" alt="">
-                                        {% endif %}
-                                    {% endwith %}
+                                        <ul class="social-icons">
+                                            <li><a href="job-details/{{ offer.id }}/">+ View More</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} </span>
-
-                                    <h4>{{ offer.position }}</h4>
-
-                                    <p>{{ offer.company}} - {{ offer.location }}</p>
-
-                                    <ul class="social-icons">
-                                        <li><a href="job-details/{{ offer.id }}/">+ View More</a></li>
-                                    </ul>
-                                </div>
-
-
-
                             </div>
-                        </div>
-
-                        {% endfor %}
+                            {% endfor %}
 
                         {% else %}
-                                <h3>No offerts found.</h3>
+                        <h3>No offers found.</h3>
                         {% endif %}
-
                     </div>
                 </div>
+
             </div>
+         </div>
+         </div>
 
             
 

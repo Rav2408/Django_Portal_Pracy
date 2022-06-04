@@ -83,9 +83,9 @@ class Application(models.Model):
     #         img.save(self.logo.path)
 
 
-
-class Tag(models.Model):
-    name = models.CharField(max_length = 50)
-
-    def __str__(self):
-        return self.name
+#
+# class Tag(models.Model):
+#     name = models.CharField(max_length = 50)
+#
+#     def __str__(self):
+#         return self.name

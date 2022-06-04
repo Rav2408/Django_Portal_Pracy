@@ -13,7 +13,7 @@ from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
 
 import Offers
 from Django_Portal_Pracy import settings
-from .models import Offer, Company, Application, Tag
+from .models import Offer, Company, Application #Tag
 from .forms import CreateUserForm, CreateOfferForm, CreateCompanyForm, CreateApplicationForm
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -100,9 +100,10 @@ def contact(request):
 
 def profile(request):
     company = get_object_or_404(Company, user=request.user.pk)
-    user = user=request.user
+    user = user = request.user
 
     return render(request, 'Index/profile.html', {'company': company, 'user': user})
+
 
 def company_profile(request):
     company = get_object_or_404(Company, user=request.user.pk)
@@ -115,8 +116,10 @@ def company_profile(request):
             application_list.append(app)
         application_count[i.id] = Application.objects.filter(offer_id=i.id).count()
     return render(request, 'Index/company_profile.html', {'company': company, 'offers_lists': offer_list,
-                                                  'application_count': application_count,
-                                                  'application_list': application_list})
+                                                          'application_count': application_count,
+                                                          'application_list': application_list})
+
+
 # def przekaż_aplikacje_na_dana_oferte():
 #     ret
 
@@ -145,7 +148,6 @@ def addoffer(request):
 
 
 def registerCompany(request, *args, **kwargs):
-
     if request.method == "POST":
         form = CreateCompanyForm(request.POST, request.FILES)
         messages.success(request, 'Account was created!')
@@ -174,22 +176,22 @@ def registerCompany(request, *args, **kwargs):
     context = {'form': form}
     return render(request, 'Index/register_company.html', context)
 
-def edit_company(request, *args, **kwargs):
 
+def edit_company(request, *args, **kwargs):
     instance = Company.objects.get(user=request.user.pk)
     if request.method == "POST":
         form = CreateCompanyForm(request.POST, request.FILES, instance=instance)
         if form.is_valid():
-            instance.company_name  = form.cleaned_data['company_name']
-            instance.city          = form.cleaned_data['city']
-            instance.street        = form.cleaned_data['street']
+            instance.company_name = form.cleaned_data['company_name']
+            instance.city = form.cleaned_data['city']
+            instance.street = form.cleaned_data['street']
             instance.street_number = form.cleaned_data['street_number']
-            instance.postcode      = form.cleaned_data['postcode']
-            instance.suite_number  = form.cleaned_data['suite_number']
-            instance.email         = form.cleaned_data['email']
-            instance.social_links  = form.cleaned_data['social_links']
-            instance.logo          = form.cleaned_data['logo']
-            instance.phone         = form.cleaned_data['phone']
+            instance.postcode = form.cleaned_data['postcode']
+            instance.suite_number = form.cleaned_data['suite_number']
+            instance.email = form.cleaned_data['email']
+            instance.social_links = form.cleaned_data['social_links']
+            instance.logo = form.cleaned_data['logo']
+            instance.phone = form.cleaned_data['phone']
             instance.save(update_fields=['company_name',
                                          'city',
                                          'street',
@@ -201,8 +203,7 @@ def edit_company(request, *args, **kwargs):
                                          'logo',
                                          'phone'])
 
-
-            #instance.update(name=request.POST.get.cleaned_data['company_name'])
+            # instance.update(name=request.POST.get.cleaned_data['company_name'])
             return redirect('profile')
     else:
         form = CreateCompanyForm(instance=instance)
@@ -260,10 +261,10 @@ def applyForJob(request, *args, **kwargs):
 
 def jobs(request):
     offersList = Offer.objects.all()
-    #trzeba stworzyć tu słownik ofert z ich zdjęciami
+    # trzeba stworzyć tu słownik ofert z ich zdjęciami
     logo_dict = {}
     for offer in offersList:
-        company = get_object_or_404(Company, pk = offer.company_id)
+        company = get_object_or_404(Company, pk=offer.company_id)
         path = str(company.logo)
         if path.__contains__("Offers/static"):
             path = path.replace("Offers/static/", "", 1)
@@ -282,48 +283,54 @@ def is_valid_query(param):
 
 
 def search(request):
-    if request.method == "POST":
 
-        qs = Offers.objects.all()  # qs -> queryset
-        tag_set = Tag.objects.all()
+    offers = Offer.objects.all()
+    #tag_set = Tag.objects.all()
 
-        position = request.GET.get('position_html')
-        company = request.GET.get('company_html')
+    min_pay = request.GET.get('min_pay_html')
+    max_pay = request.GET.get('max_pay_html')
 
-        min_pay = request.GET.get('min_pay_html')
-        max_pay = request.GET.get('max_pay_html')
+    position = request.GET.get('position_html')
+    company = request.GET.get('company_html')
 
-        location = request.GET.get('location_html')
+    location = request.GET.get('location_html')
 
-        # tag = request.GET.get('tags')
-        remote = request.GET.get('remote_html')
+    #tag = request.GET.get('tags')
+    remote = request.GET.get('remote_html')
 
-        if is_valid_query(position):
-            qs = qs.filter(position__icontains=position)
+    if is_valid_query(min_pay):
+        offers = offers.filter(min_salary__gte=min_pay)  # gte - greater than or equal
 
-        if is_valid_query(company):
-            qs = qs.filter(company__icontains=company)
+    if is_valid_query(max_pay):
+        offers = offers.filter(max_salary__lte=max_pay)
 
-        if is_valid_query(min_pay):
-            qs = qs.filter(min_salary__gte=min_pay)  # gte - greater than or equal
+    if is_valid_query(position):
+        offers = offers.filter(position__icontains=position)
 
-        if is_valid_query(max_pay):
-            qs = qs.filter(max_salary__gte=max_pay)
+    if is_valid_query(company):
+        offers = offers.filter(company__icontains=company)
 
-        if is_valid_query(location):
-            qs = qs.filter(location__lte=location)
+    if is_valid_query(location):
+        offers = offers.filter(location__icontains=location)
 
-        # if is_valid_query(tag) and tag != "Choose...":
-        #     qs = qs.filter(must_have__name=tag)
+    # if is_valid_query(tag) and tag != "Choose...":
+    #     qs = qs.filter(must_have__name=tag)
 
-        if remote == 'on':
-            qs = qs.filter(remote=True)
+    if remote == 'on':
+        offers = offers.filter(remote=True)
 
-        context = {
-            'queryset': qs,
-            'tag_set': tag_set,
-            'min_pay_html': min_pay,
-        }
-        return render(request, 'Offers/search.html', context)
-    else:
-        return render(request, 'Offers/search.html', {})
+    logo_dict = {}
+    for offer in offers:
+        company = get_object_or_404(Company, pk=offer.company_id)
+        path = str(company.logo)
+        if path.__contains__("Offers/static"):
+            path = path.replace("Offers/static/", "", 1)
+        logo_dict[offer] = path
+
+    context = {
+        'offers2': offers,
+        #'tag_set': tag_set,
+        'logo_dict': logo_dict
+        #'min_pay_html': min_pay,
+    }
+    return render(request, 'Offers/search.html', context)
