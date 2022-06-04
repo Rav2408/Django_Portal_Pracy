@@ -346,7 +346,7 @@ def search(request):
         offers = offers.filter(position__icontains=position)
 
     if is_valid_query(company):
-        offers = offers.filter(company__icontains=company)
+        offers = offers.filter(company__company_name__icontains=company)
 
     if is_valid_query(location):
         offers = offers.filter(location__icontains=location)
