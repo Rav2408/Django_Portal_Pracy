@@ -13,7 +13,7 @@ from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
 
 import Offers
 from Django_Portal_Pracy import settings
-from .models import Offer, Company, Application #Tag
+from .models import Offer, Company, Application
 from .forms import CreateUserForm, CreateOfferForm, CreateCompanyForm, CreateApplicationForm
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -250,6 +250,7 @@ def applyForJob(request, *args, **kwargs):
                                       offer=get_object_or_404(Offer, pk=offer_id)
                                       )
             application.save()
+            messages.info(request, 'Tour application.')
             return redirect('home')
 
     else:
@@ -285,7 +286,6 @@ def is_valid_query(param):
 def search(request):
 
     offers = Offer.objects.all()
-    #tag_set = Tag.objects.all()
 
     min_pay = request.GET.get('min_pay_html')
     max_pay = request.GET.get('max_pay_html')
@@ -295,7 +295,6 @@ def search(request):
 
     location = request.GET.get('location_html')
 
-    #tag = request.GET.get('tags')
     remote = request.GET.get('remote_html')
 
     if is_valid_query(min_pay):
@@ -313,9 +312,6 @@ def search(request):
     if is_valid_query(location):
         offers = offers.filter(location__icontains=location)
 
-    # if is_valid_query(tag) and tag != "Choose...":
-    #     qs = qs.filter(must_have__name=tag)
-
     if remote == 'on':
         offers = offers.filter(remote=True)
 
@@ -329,8 +325,6 @@ def search(request):
 
     context = {
         'offers2': offers,
-        #'tag_set': tag_set,
         'logo_dict': logo_dict
-        #'min_pay_html': min_pay,
     }
     return render(request, 'Offers/search.html', context)
