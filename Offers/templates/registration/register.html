@@ -13,7 +13,7 @@
             <source src="{% static 'images/video.mp4' %}" type="video/mp4" />
         </video>
         <div class="video-overlay header-text">
-            <div class="caption">
+            <div class="caption" style="align-content: center;">
 
 
                     <!--
@@ -34,7 +34,6 @@
                   </ul>
                 {% endif %}
 
-
                   <form id="user_register" method="post" action="{% url 'register' %}">
                       {% csrf_token %}
 
@@ -42,25 +41,21 @@
                   <p>{{form.errors}}</p>
                   {% endif %}
 
-                     <p>{{form.username.label}}
-                      {{form.username}}</p>
-                        <p>&nbsp;</p>
-                      <p>{{form.email.label}}
-                      {{form.email}}</p>
-                        <p>&nbsp;</p>
-                      <p>{{form.password1.label}}
-                      {{form.password1}}</p>
-                        <p>&nbsp;</p>
-                      <p>{{form.password2.label}}
-                      {{form.password2}}</p>
-                        <p></p>
+                     <p>{{form.username}}</p>
+                        <br>
+                      <p>{{form.email}}</p>
+                        <br>
+                      <p>{{form.password1}}</p>
+                        <br>
+                      <p>{{form.password2}}</p>
+                        <br>
                       <!-- {{form.captcha}}  zdubluje sie-->
 
                       <div class="g-recaptcha" data-sitekey="6LczTeEfAAAAANM3rsBQ63TRXKhcJwHOT0skIhhY" ></div>
                       <!--<button type="submit" class="btn btn-primary" >Register</button>-->
-                       <p><input type="submit"  value="Register"></p>
+                      <br>
+                       <p><input type="submit" class="btn btn-primary" value="Register"></p>
                       <input type="hidden" name="next" value="{{ next }}">
-
                       <!--
                       <p><input type="submit" class="btn btn-primary">Register</p>
                       <input type="hidden" name="next" value="{{ next }}">

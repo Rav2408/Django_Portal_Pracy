@@ -2,8 +2,22 @@
 {% load static %}
 {% load dict %}
 {% block head %}
+
 {% endblock %}
 {% block body %}
+    <script type="text/javascript">
+        function vistoggle(id) {
+            var e = document.getElementsByClassName(id);
+           for(var i =0;i<e.length;i++){
+             if(e[i].style.display == 'none') {
+                e[i].style.display = 'block';
+             }
+             else {
+                e[i].style.display = 'none';
+             }
+          }
+        }
+    </script>
     <section class="section section-bg" id="call-to-action" style="background-image: url({% static 'images/about-fullscreen-1-1920x700.jpg' %})">
         <div class="container">
             <div class="row">
@@ -29,25 +43,46 @@
                 <a href="{% url 'addoffer' %}">Add a new offer</a>
             </div>
             <br>
-            <h3 style="color:#ed563b">Your offers</h3>
-            <br>
-            {% for offer in offers_lists %}
-                <div class="cta-content">
-                    <div class="down-content">
-                        <h4>{{ offer.position }}</h4>
-                        <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} </span>
-                        <h6> Applications: {{ application_count|get_item:offer.id }}  </h6>
-                        {% for app in application_list %}
-                            {% if app.offer.id == offer.id %}
-                                <h6>{{ app.first_name }}{{ app.last_name }}</h6>
-                            {% endif %}
-                        {% endfor %}
-
-
-                        <br>
-                    </div>
+            <div>
+                <div>
+                    <h3>Your offers</h3>
+                    <br>
+                    {% for offer in offers_lists %}
+                        <div id="offer-content">
+                            <div class="down-content">
+                                <h4>{{ offer.position }}</h4>
+                                    <div class="btn">
+                                        <a href="">Edit</a>
+                                    </div>
+                                <form action="{% url 'offer_delete' id=offer.id %}" method="post">
+                                   {% csrf_token %}
+                                   <button class="btn btn-danger" type="submit" >Delete</button>
+                                </form>
+                                <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} </span>
+                                <h6> Applications: {{ application_count|get_item:offer.id }}  <button onclick="vistoggle({{offer.id}})">Show</button></h6>
+                                <br>
+                                    {% for app in application_list %}
+                                        {% if app.offer.id == offer.id %}
+                                            <div class="{{offer.id}}" style="display: none;">
+                                                <h6>{{ app.first_name }} {{ app.last_name }} {{app.email}} <a href="{{app.cv.url}}" download> Download CV </a></h6>
+                                                    <h7>
+                                                        <p style="color:black;">{{app.reason}}</p>
+                                                    <form action="{% url 'application_delete' id=app.id %}" method="post">
+                                                       {% csrf_token %}
+                                                        <br>
+                                                       <button class="btn btn-danger" type="submit" >Delete</button>
+                                                    </form>
+                                                    </h7>
+                                                <br>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                <br>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
         </div>
     </section>
     <!-- ***** Features Item End ***** -->

@@ -10,6 +10,10 @@ figure, header, nav, section, article, aside, footer, figcaption {
   outline: 0;
 }
 
+#offer-content{
+  border-top: 1px solid rgba(35,45,57,0.8);
+  padding-top: 1%;
+}
 .offer {
   background-position: center center;
   background-repeat: no-repeat;

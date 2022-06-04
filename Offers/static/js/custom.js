@@ -78,23 +78,23 @@
 
     });
 
-
+	// Window Resize Mobile Menu Fix
+	function mobileNav() {
+		var width = $(window).width();
+		$('.submenu').on('click', function() {
+			if(width < 1000) {
+				$('.submenu ul').removeClass('active');
+				$(this).find('ul').toggleClass('active');
+			}
+		});
+	}
 	// Window Resize Mobile Menu Fix
 	$(window).on('resize', function() {
 		mobileNav();
 	});
 
 
-	// Window Resize Mobile Menu Fix
-	function mobileNav() {
-		var width = $(window).width();
-		$('.submenu').on('click', function() {
-			if(width < 767) {
-				$('.submenu ul').removeClass('active');
-				$(this).find('ul').toggleClass('active');
-			}
-		});
-	}
+
 
 
 })(window.jQuery);

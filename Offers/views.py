@@ -234,6 +234,33 @@ def edit_company(request, *args, **kwargs):
     context = {'form': form}
     return render(request, 'Index/edit_company.html', context)
 
+def edit_offer(request, ids, *args, **kwargs):
+    instance = Offer.objects.get(id=ids)
+    if request.method == "POST":
+        form = CreateOfferForm(request.POST)
+        if form.is_valid():
+            instance.company      = form.cleaned_data['company']
+            instance.position     = form.cleaned_data['position']
+            instance.min_salary   = form.cleaned_data['min_salary']
+            instance.max_salary   = form.cleaned_data['max_salary']
+            instance.remote       = form.cleaned_data['remote']
+            instance.location     = form.cleaned_data['location']
+            instance.description  = form.cleaned_data['description']
+            instance.save(update_fields=['company',
+                                         'position',
+                                         'min_salary',
+                                         'max_salary',
+                                         'remote',
+                                         'location',
+                                         'description'])
+
+            #instance.update(name=request.POST.get.cleaned_data['company_name'])
+            return redirect('company_profile')
+    else:
+        form = CreateCompanyForm(instance=instance)
+    context = {'form': form}
+    return render(request, 'Index/edit_company.html', context)
+
 
 def applyForJob(request, *args, **kwargs):
     if request.method == "POST":
@@ -274,3 +301,15 @@ def job_details(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
     company = get_object_or_404(Company, pk=offer.company_id)
     return render(request, 'Offers/job-details.html', {'offer': offer, 'company': company})
+
+def delete_application(request, id):
+    ob = Application.objects.get(id=id)
+    ob.delete()
+    return redirect('company_profile')
+
+def delete_offer(request, id):
+    ob = Offer.objects.get(id=id)
+    ob.delete()
+    return redirect('company_profile')
+
+

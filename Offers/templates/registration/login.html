@@ -4,8 +4,8 @@
 {% endblock %}
 {% block body %}
     <!-- ***** Main Banner Area Start ***** -->
-    <div class="main-banner" id="top">
-        <div class="main-banner" id="top">
+    <div class="main-banner" >
+        <div class="main-banner" >
         <video autoplay muted loop id="bg-video">
             <source src="{% static 'images/video.mp4' %}" type="video/mp4" />
         </video>
@@ -26,7 +26,7 @@
                       <p>&nbsp;</p>
                       <p>Password: {{ form.password }}</p>
                       <p>&nbsp;</p>
-                      <p><input type="submit"  value="Log in"></p>
+                      <p><input type="submit" class="btn btn-primary"  value="Log in"></p>
                       <input type="hidden" name="next" value="{{ next }}">
                   </form>
                 </div>

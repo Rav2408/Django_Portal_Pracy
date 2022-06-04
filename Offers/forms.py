@@ -18,7 +18,6 @@ class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
-
         feedback = forms.CharField(widget=forms.Textarea, required=True)
         captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox, required=True)
 
@@ -30,6 +29,12 @@ class CreateUserForm(UserCreationForm):
             user.save()
         return user
 
+    def __init__(self, *args, **kwargs):
+        super(CreateUserForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['placeholder'] = 'Username'
+        self.fields['email'].widget.attrs['placeholder'] = 'Email address'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Password'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Repeat password'
 
 class CreateOfferForm(forms.ModelForm):
     class Meta:
