@@ -206,60 +206,32 @@ def edit_company(request, *args, **kwargs):
     else:
         form = CreateCompanyForm(instance=instance)
 
-    # if request.method == "POST":
-    #     form = CreateCompanyForm(request.POST, request.FILES)
-    #     messages.success(request, 'Account was created!')
-    #     if form.is_valid():
-    #         logo = None
-    #         if request.FILES:
-    #             logo = request.FILES['logo']
-    #         company = Company(company_name=form.cleaned_data['company_name'],
-    #                           city=form.cleaned_data['city'],
-    #                           street=form.cleaned_data['street'],
-    #                           street_number=form.cleaned_data['street_number'],
-    #                           postcode=form.cleaned_data['postcode'],
-    #                           suite_number=form.cleaned_data['suite_number'],
-    #                           email=form.cleaned_data['email'],
-    #                           social_links=form.cleaned_data['social_links'],
-    #                           logo=logo,
-    #                           phone=form.cleaned_data['phone'],
-    #                           user=User.objects.get(pk=request.user.pk)
-    #                           )
-    #         company.save()
-    #         return redirect('home')
-    #
-    # else:
-    #     form = CreateCompanyForm()
-
     context = {'form': form}
     return render(request, 'Index/edit_company.html', context)
 
-def edit_offer(request, ids, *args, **kwargs):
-    instance = Offer.objects.get(id=ids)
+def edit_offer(request, id):
+    instance = Offer.objects.get(id=id)
     if request.method == "POST":
-        form = CreateOfferForm(request.POST)
+        form = CreateOfferForm(request.POST, instance=instance)
         if form.is_valid():
-            instance.company      = form.cleaned_data['company']
             instance.position     = form.cleaned_data['position']
             instance.min_salary   = form.cleaned_data['min_salary']
             instance.max_salary   = form.cleaned_data['max_salary']
             instance.remote       = form.cleaned_data['remote']
             instance.location     = form.cleaned_data['location']
             instance.description  = form.cleaned_data['description']
-            instance.save(update_fields=['company',
-                                         'position',
+            instance.save(update_fields=['position',
                                          'min_salary',
                                          'max_salary',
                                          'remote',
                                          'location',
                                          'description'])
 
-            #instance.update(name=request.POST.get.cleaned_data['company_name'])
             return redirect('company_profile')
     else:
-        form = CreateCompanyForm(instance=instance)
-    context = {'form': form}
-    return render(request, 'Index/edit_company.html', context)
+        form = CreateOfferForm(instance=instance)
+    context = {'form': form, 'id': id}
+    return render(request, 'Index/edit_offer.html', context)
 
 
 def applyForJob(request, *args, **kwargs):
