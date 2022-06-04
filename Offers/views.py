@@ -302,7 +302,7 @@ def search(request):
         offers = offers.filter(min_salary__gte=min_pay)  # gte - greater than or equal
 
     if is_valid_query(max_pay):
-        offers = offers.filter(max_salary__lte=max_pay)
+        offers = offers.filter(max_salary__lte=max_pay)  # lower than or equal
 
     if is_valid_query(position):
         offers = offers.filter(position__icontains=position)

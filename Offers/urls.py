@@ -17,5 +17,7 @@ urlpatterns = [
     path('register_company/', login_required(views.registerCompany), name='register_company'),
     path('edit_company/', login_required(views.edit_company), name='edit_company'),
     path('addoffer/', login_required(views.addoffer), name='addoffer'),
-    path('jobs/search/', views.search, name='search')
+    path('jobs/search/', views.search, name='search'),
+    path('jobs/search/job-details/<int:offer_id>/', views.job_details, name='job-details'),
+    path('jobs/search/job-details/<int:offer_id>/apply-for-job', views.applyForJob, name='apply-for-job')
 ]
