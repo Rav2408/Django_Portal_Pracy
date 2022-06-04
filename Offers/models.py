@@ -81,3 +81,11 @@ class Application(models.Model):
     #         output_size = (300, 300)
     #         img.thumbnail(output_size) # resizes image (thumbnails are reduced-size versions of pictures)
     #         img.save(self.logo.path)
+
+
+#
+# class Tag(models.Model):
+#     name = models.CharField(max_length = 50)
+#
+#     def __str__(self):
+#         return self.name

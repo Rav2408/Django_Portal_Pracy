@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
 
+import Offers
 from Django_Portal_Pracy import settings
 from .models import Offer, Company, Application
 from .forms import CreateUserForm, CreateOfferForm, CreateCompanyForm, CreateApplicationForm
@@ -103,6 +104,7 @@ def profile(request):
 
     return render(request, 'Index/profile.html', {'company': company, 'user': user})
 
+
 def company_profile(request):
     company = get_object_or_404(Company, user=request.user.pk)
     offer_list = Offer.objects.filter(company=company)
@@ -172,6 +174,7 @@ def registerCompany(request, *args, **kwargs):
 
     context = {'form': form}
     return render(request, 'Index/register_company.html', context)
+
 
 def edit_company(request, *args, **kwargs):
 
@@ -302,10 +305,12 @@ def job_details(request, offer_id):
     company = get_object_or_404(Company, pk=offer.company_id)
     return render(request, 'Offers/job-details.html', {'offer': offer, 'company': company})
 
+
 def delete_application(request, id):
     ob = Application.objects.get(id=id)
     ob.delete()
     return redirect('company_profile')
+
 
 def delete_offer(request, id):
     ob = Offer.objects.get(id=id)
@@ -313,3 +318,52 @@ def delete_offer(request, id):
     return redirect('company_profile')
 
 
+def is_valid_query(param):
+    return param != '' and param is not None
+
+
+def search(request):
+
+    offers = Offer.objects.all()
+
+    min_pay = request.GET.get('min_pay_html')
+    max_pay = request.GET.get('max_pay_html')
+
+    position = request.GET.get('position_html')
+    company = request.GET.get('company_html')
+
+    location = request.GET.get('location_html')
+
+    remote = request.GET.get('remote_html')
+
+    if is_valid_query(min_pay):
+        offers = offers.filter(min_salary__gte=min_pay)  # gte - greater than or equal
+
+    if is_valid_query(max_pay):
+        offers = offers.filter(max_salary__lte=max_pay)  # lower than or equal
+
+    if is_valid_query(position):
+        offers = offers.filter(position__icontains=position)
+
+    if is_valid_query(company):
+        offers = offers.filter(company__icontains=company)
+
+    if is_valid_query(location):
+        offers = offers.filter(location__icontains=location)
+
+    if remote == 'on':
+        offers = offers.filter(remote=True)
+
+    logo_dict = {}
+    for offer in offers:
+        company = get_object_or_404(Company, pk=offer.company_id)
+        path = str(company.logo)
+        if path.__contains__("Offers/static"):
+            path = path.replace("Offers/static/", "", 1)
+        logo_dict[offer] = path
+
+    context = {
+        'offers2': offers,
+        'logo_dict': logo_dict
+    }
+    return render(request, 'Offers/search.html', context)

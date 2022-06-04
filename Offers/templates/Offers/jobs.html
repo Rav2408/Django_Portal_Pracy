@@ -23,148 +23,85 @@
     <!-- ***** Call to Action End ***** -->
 
     <!-- ***** Fleet Starts ***** -->
-    <section class="section" id="trainers">
+      <section class="section" id="trainers">
         <div class="container">
             <br>
             <br>
 
             <div class="row">
                 <div class="col-lg-4">
-                    <form action="#">
+
+                    <form method="post" action="{% url 'search' %}">
+
                          <h5 style="margin-bottom: 15px">Salary</h5>
 
                          <div>
                               <label>
                                   <span>Min. </span>
-                                   <input type="number">
+                                   <input type="number" name="min_pay">
                               </label>
                          </div>
 
                          <div>
                               <label>
                                   <span>Max. </span>
-                                   <input type="number">
-                              </label>
-                         </div>
-
-                         <br>
-
-                         <h5 style="margin-bottom: 15px">Category</h5>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Accounting / Finance / Insurance Jobs (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Accounting / Finance / Insurance Jobs (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Accounting / Finance / Insurance Jobs (5)</span>
-                              </label>
-                         </div>
-
-                         <br>
-
-                         <h5 style="margin-bottom: 15px">Career levels</h5>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Entry Level (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Entry Level (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Entry Level (5)</span>
-                              </label>
-                         </div>
-
-                         <br>
-
-                         <h5 style="margin-bottom: 15px">Education levels</h5>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Associate Degree (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Associate Degree (5)</span>
-                              </label>
-                         </div>
-
-                         <div>
-                              <label>
-                                   <input type="checkbox">
-
-                                   <span>Associate Degree (5)</span>
+                                   <input type="number" name="max_pay">
                               </label>
                          </div>
 
                          <br>
 
 
-                         <h5 style="margin-bottom: 15px">Years of experience</h5>
-
                          <div>
                               <label>
-                                   <input type="checkbox">
 
-                                    <span>&lt; 1 (5)</span>
+                                   <span><h5 style="margin-bottom: 15px">Position</h5> </span>
+                                   <input type="text" name="position">
+
+
                               </label>
                          </div>
 
                          <div>
                               <label>
-                                   <input type="checkbox">
+                                  <span><h5 style="margin-bottom: 15px">Company</h5></span>
+                                   <input type="text" name="company">
 
-                                    <span>&lt; 1 (5)</span>
                               </label>
                          </div>
+
 
                          <div>
                               <label>
-                                   <input type="checkbox">
 
-                                    <span>&lt; 1 (5)</span>
+                                  <span><h5 style="margin-bottom: 15px">Location</h5> </span>
+                                   <input type="text" name="location">
+
+
                               </label>
                          </div>
+
+
+
+                         <div>
+                              <label>
+
+                                  <span><h5 style="margin-bottom: 15px">Remote</h5> </span>
+                                   <input type="checkbox">
+
+
+                              </label>
+                         </div>
+
+
+
                         <p>&nbsp;</p>
+
                         <div class="main-button">
-                            <a href="{% url 'jobs' %}">Submit</a>
+                            <a href="{% url 'search' %}">Search</a>
                         </div>
                     </form>
-                    
+
                     <br>
                 </div>
 
@@ -198,7 +135,6 @@
                                 </div>
                             </div>
                         </div>
-
                         {% endfor %}
 <!--                        <div class="col-md-6">-->
 <!--                            <div class="trainer-item">-->
