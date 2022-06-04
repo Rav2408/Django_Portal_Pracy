@@ -11,8 +11,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
 
+import Offers
 from Django_Portal_Pracy import settings
-from .models import Offer, Company, Application
+from .models import Offer, Company, Application, Tag
 from .forms import CreateUserForm, CreateOfferForm, CreateCompanyForm, CreateApplicationForm
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -274,3 +275,55 @@ def job_details(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
     company = get_object_or_404(Company, pk=offer.company_id)
     return render(request, 'Offers/job-details.html', {'offer': offer, 'company': company})
+
+
+def is_valid_query(param):
+    return param != '' and param is not None
+
+
+def search(request):
+    if request.method == "POST":
+
+        qs = Offers.objects.all()  # qs -> queryset
+        tag_set = Tag.objects.all()
+
+        position = request.GET.get('position_html')
+        company = request.GET.get('company_html')
+
+        min_pay = request.GET.get('min_pay_html')
+        max_pay = request.GET.get('max_pay_html')
+
+        location = request.GET.get('location_html')
+
+        # tag = request.GET.get('tags')
+        remote = request.GET.get('remote_html')
+
+        if is_valid_query(position):
+            qs = qs.filter(position__icontains=position)
+
+        if is_valid_query(company):
+            qs = qs.filter(company__icontains=company)
+
+        if is_valid_query(min_pay):
+            qs = qs.filter(min_salary__gte=min_pay)  # gte - greater than or equal
+
+        if is_valid_query(max_pay):
+            qs = qs.filter(max_salary__gte=max_pay)
+
+        if is_valid_query(location):
+            qs = qs.filter(location__lte=location)
+
+        # if is_valid_query(tag) and tag != "Choose...":
+        #     qs = qs.filter(must_have__name=tag)
+
+        if remote == 'on':
+            qs = qs.filter(remote=True)
+
+        context = {
+            'queryset': qs,
+            'tag_set': tag_set,
+            'min_pay_html': min_pay,
+        }
+        return render(request, 'Offers/search.html', context)
+    else:
+        return render(request, 'Offers/search.html', {})

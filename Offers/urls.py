@@ -16,5 +16,6 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('register_company/', login_required(views.registerCompany), name='register_company'),
     path('edit_company/', login_required(views.edit_company), name='edit_company'),
-    path('addoffer/', login_required(views.addoffer), name='addoffer')
+    path('addoffer/', login_required(views.addoffer), name='addoffer'),
+    path('jobs/search/', views.search, name='search')
 ]
