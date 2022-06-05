@@ -52,14 +52,14 @@
                             <div class="down-content">
                                 <h4>{{ offer.position }}</h4>
                                     <div class="btn">
-                                        <a href="">Edit</a>
+                                        <a href="edit_offer/{{offer.id}}">Edit</a>
                                     </div>
                                 <form action="{% url 'offer_delete' id=offer.id %}" method="post">
                                    {% csrf_token %}
                                    <button class="btn btn-danger" type="submit" >Delete</button>
                                 </form>
                                 <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} </span>
-                                <h6> Applications: {{ application_count|get_item:offer.id }}  <button onclick="vistoggle({{offer.id}})">Show</button></h6>
+                                <h6> Applications: {{ application_count|get_item:offer.id }}  <button onclick="vistoggle({{ offer.id }})">Show</button></h6>
                                 <br>
                                     {% for app in application_list %}
                                         {% if app.offer.id == offer.id %}
