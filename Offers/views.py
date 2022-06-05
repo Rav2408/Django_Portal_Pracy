@@ -347,6 +347,7 @@ def search(request):
 
     if is_valid_query(company):
         offers = offers.filter(company__company_name__icontains=company)
+                                # foreign key - field - lookup
 
     if is_valid_query(location):
         offers = offers.filter(location__icontains=location)
