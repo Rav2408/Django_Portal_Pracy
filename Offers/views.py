@@ -13,6 +13,9 @@ from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
 from Django_Portal_Pracy.settings import MEDIA_ROOT
 from django.core.files.storage import FileSystemStorage
 
+from django.views.generic import ListView, DetailView, CreateView
+
+from django.core.paginator import Paginator
 import Offers
 from Django_Portal_Pracy import settings
 from .models import Offer, Company, Application
@@ -123,6 +126,7 @@ def company_profile(request):
 # def przekaż_aplikacje_na_dana_oferte():
 #     ret
 
+
 def addoffer(request):
     if request.user.is_authenticated:
         if request.method == "POST":
@@ -222,6 +226,7 @@ def edit_company(request, *args, **kwargs):
     context = {'form': form}
     return render(request, 'Index/edit_company.html', context)
 
+
 def edit_offer(request, id):
     instance = Offer.objects.get(id=id)
     if request.method == "POST":
@@ -271,12 +276,18 @@ def applyForJob(request, *args, **kwargs):
 
 def jobs(request):
     offersList = Offer.objects.all()
+
+    pagination = Paginator(Offer.objects.all(), 4)
+    page = request.GET.get('page')
+    j = pagination.get_page(page) # j jak jobs
+
     #słownik ofert z zdjęciami ich firm
     logo_dict = {}
     for offer in offersList:
         company = get_object_or_404(Company, pk = offer.company_id)
         logo_dict[offer] = company.logo
-    return render(request, "Offers/jobs.html", {'offers_list': offersList, 'logo_dict': logo_dict})
+    return render(request, "Offers/jobs.html", {'offers_list': j,
+                                                'logo_dict': logo_dict})
 
 
 def job_details(request, offer_id):
