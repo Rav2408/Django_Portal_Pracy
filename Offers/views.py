@@ -277,7 +277,7 @@ def applyForJob(request, *args, **kwargs):
 def jobs(request):
     offersList = Offer.objects.all()
 
-    pagination = Paginator(Offer.objects.all(), 4)
+    pagination = Paginator(Offer.objects.all(), 6)
     page = request.GET.get('page')
     j = pagination.get_page(page) # j jak jobs
 
@@ -286,7 +286,8 @@ def jobs(request):
     for offer in offersList:
         company = get_object_or_404(Company, pk = offer.company_id)
         logo_dict[offer] = company.logo
-    return render(request, "Offers/jobs.html", {'offers_list': j,
+    return render(request, "Offers/jobs.html", {'offers_list': offersList,
+                                                'offers_list2' : j,
                                                 'logo_dict': logo_dict})
 
 
@@ -314,6 +315,7 @@ def is_valid_query(param):
 
 def search(request):
 
+    #global offers1
     offers = Offer.objects.all()
 
     min_pay = request.GET.get('min_pay_html')
@@ -336,7 +338,7 @@ def search(request):
         offers = offers.filter(position__icontains=position)
 
     if is_valid_query(company):
-        offers = offers.filter(company__company_name__icontains=company)
+        offers = offers.filter(company__company_name__icontains=company) #tu cos nie działa
                                 # foreign key - field - lookup
 
     if is_valid_query(location):
@@ -345,17 +347,19 @@ def search(request):
     if remote == 'on':
         offers = offers.filter(remote=True)
 
+    pagination = Paginator(offers, 6)
+    page_number = request.GET.get('page')
+    results = pagination.get_page(page_number)
+
     logo_dict = {}
     for offer in offers:
         company = get_object_or_404(Company, pk=offer.company_id)
         logo_dict[offer] = company.logo
 
-    pagination = Paginator(offers, 4)
-    page = request.GET.get('page')
-    results = pagination.get_page(page)
-
     context = {
-        'offers2': results,
+        #'offers2': offers1,
+        'result': results,
         'logo_dict': logo_dict
     }
+
     return render(request, 'Offers/search.html', context)

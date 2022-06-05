@@ -105,34 +105,37 @@
 
                 <div class="col-lg-8">
                     <div class="row">
-                        {% if offers2 %}
-                            {% for offer in offers2 %}
+                        {% if result %}
+                            {% for offer in result %}
 
-                            <div class="col-md-6">
-                                <div class="trainer-item">
-                                    <div class="image-thumb">
-                                        {% with logo_dict|get_item:offer as image %}
+                                    <div class="col-md-6">
+                                        <div class="trainer-item">
+                                            <div class="image-thumb">
+                                                {% with logo_dict|get_item:offer as image %}
 
-                                        {% if not image %}
-                                            <img src="{% static 'images/logo_przykładowe.jpg' %}" alt="">
-                                        {% else %}
-                                            <img src="{{ image.url }}" alt="">
-                                        {% endif %}
-                                    {% endwith %}
+                                                {% if not image %}
+                                                    <img src="{% static 'images/logo_przykładowe.jpg' %}" alt="">
+                                                {% else %}
+                                                    <img src="{{ image.url }}" alt="">
+                                                {% endif %}
+                                            {% endwith %}
+                                            </div>
+
+                                            <div class="down-content">
+                                                <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} </span>
+
+                                                <h4>{{ offer.position }}</h4>
+
+                                                <p>{{ offer.company}} - {{ offer.location }}</p>
+
+                                                <ul class="social-icons">
+                                                    <li><a href="job-details/{{ offer.id }}/">+ View More</a></li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
                                     </div>
-                                    <div class="down-content">
-                                        <span> <sup>$</sup> {{ offer.min_salary }} - {{offer.max_salary}} </span>
 
-                                        <h4>{{ offer.position }}</h4>
-
-                                        <p>{{ offer.company}} - {{ offer.location }}</p>
-
-                                        <ul class="social-icons">
-                                            <li><a href="job-details/{{ offer.id }}/">+ View More</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
                             {% endfor %}
 
                         {% else %}
@@ -152,30 +155,28 @@
             <nav>
               <ul class="pagination pagination-lg justify-content-center">
                 <li class="page-item">
-                    {% if offers2.has_previous %}
-                      <a class="page-link" href="?page={{ offers2.previous_page_number }}" aria-label="Previous">
+                    {% if result.has_previous %}
+                      <a class="page-link" href="?page={{ result.previous_page_number }}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">Previous</span>
                       </a>
                     {% endif %}
                 </li>
-                {% if offers2.has_previous %}
-                    <li class="page-item"><a class="page-link" href="?page={{ offers2.previous_page_number }}">{{ offers2.previous_page_number }}</a></li>
-
+                {% if result.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ result.previous_page_number }}">{{ result.previous_page_number }}</a></li>
                 {% endif %}
 
-                    <li class="page-item"><a class="page-link" href="?page={{ offers2.number }}">{{ offers2.number }}</a></li> <!-- OBECNA -->
+                    <li class="page-item"><a class="page-link" href="?page={{ result.number }}">{{ result.number }}</a></li> <!-- OBECNA -->
 
-                {% if offers2.has_next %}
-                    <li class="page-item"><a class="page-link" href="?page={{ offers2.next_page_number }}">{{ offers2.next_page_number }}</a></li>
-
+                {% if result.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ result.next_page_number }}">{{ result.next_page_number }}</a></li>
                 {% endif %}
 <!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
 <!--                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
 
                 <li class="page-item">
-                    {% if offers2.has_next %}
-                      <a class="page-link" href="?page={{ offers2.next_page_number }}" aria-label="Next">
+                    {% if result.has_next %}
+                      <a class="page-link" href="?page={{ result.next_page_number }}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                       </a>
