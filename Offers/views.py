@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
 from Django_Portal_Pracy.settings import MEDIA_ROOT
+from django.core.files.storage import FileSystemStorage
 
 import Offers
 from Django_Portal_Pracy import settings
@@ -181,13 +182,16 @@ def edit_company(request, *args, **kwargs):
 
     instance = Company.objects.get(user=request.user.pk)
     if request.method == "POST":
+        logo = instance.logo
+        if request.FILES:
+            if logo:
+                print(os.path.join(MEDIA_ROOT, logo.name))
+                os.remove(os.path.join(MEDIA_ROOT, logo.name))
         form = CreateCompanyForm(request.POST, request.FILES, instance=instance)
         if form.is_valid():
-            logo = instance.logo
-            if request.FILES:
-                #TODO usunac stare logo
-                delete_logo(logo)
-                logo = request.FILES['logo']
+
+                # delete_logo(logo)
+            logo = request.FILES['logo']
             instance.company_name  = form.cleaned_data['company_name']
             instance.city          = form.cleaned_data['city']
             instance.street        = form.cleaned_data['street']
@@ -292,20 +296,6 @@ def delete_offer(request, id):
     ob.delete()
     return redirect('company_profile')
 
-def delete_logo(logo):
-    if logo:
-        if logo.file:
-            if os.path.isfile(os.path.join(MEDIA_ROOT,'logo', logo.name)):
-                os.remove(os.path.join(MEDIA_ROOT,'logo', logo.name))
-            else:
-                print('pod tą ścieżką nie ma pliku')
-                print(logo.path)
-                print(logo.name)
-                print(os.path.join(MEDIA_ROOT,'logo', logo.name))
-        else:
-            print('logo nie jest plikiem')
-    else:
-        print('logo jest puste')
 
 def is_valid_query(param):
     return param != '' and param is not None
