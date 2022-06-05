@@ -350,8 +350,12 @@ def search(request):
         company = get_object_or_404(Company, pk=offer.company_id)
         logo_dict[offer] = company.logo
 
+    pagination = Paginator(offers, 4)
+    page = request.GET.get('page')
+    results = pagination.get_page(page)
+
     context = {
-        'offers2': offers,
+        'offers2': results,
         'logo_dict': logo_dict
     }
     return render(request, 'Offers/search.html', context)
