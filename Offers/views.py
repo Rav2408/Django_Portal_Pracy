@@ -2,7 +2,7 @@ import json
 import urllib
 import urllib.parse
 import urllib.request
-
+import os
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites import requests
 from django.shortcuts import render, redirect, get_object_or_404
@@ -10,6 +10,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
+from Django_Portal_Pracy.settings import MEDIA_ROOT
+from django.core.files.storage import FileSystemStorage
 
 import Offers
 from Django_Portal_Pracy import settings
@@ -180,8 +182,16 @@ def edit_company(request, *args, **kwargs):
 
     instance = Company.objects.get(user=request.user.pk)
     if request.method == "POST":
+        logo = instance.logo
+        if request.FILES:
+            if logo:
+                print(os.path.join(MEDIA_ROOT, logo.name))
+                os.remove(os.path.join(MEDIA_ROOT, logo.name))
         form = CreateCompanyForm(request.POST, request.FILES, instance=instance)
         if form.is_valid():
+
+                # delete_logo(logo)
+            logo = request.FILES['logo']
             instance.company_name  = form.cleaned_data['company_name']
             instance.city          = form.cleaned_data['city']
             instance.street        = form.cleaned_data['street']
@@ -190,7 +200,7 @@ def edit_company(request, *args, **kwargs):
             instance.suite_number  = form.cleaned_data['suite_number']
             instance.email         = form.cleaned_data['email']
             instance.social_links  = form.cleaned_data['social_links']
-            instance.logo          = form.cleaned_data['logo']
+            instance.logo          = logo
             instance.phone         = form.cleaned_data['phone']
             instance.save(update_fields=['company_name',
                                          'city',
@@ -261,14 +271,11 @@ def applyForJob(request, *args, **kwargs):
 
 def jobs(request):
     offersList = Offer.objects.all()
-    #trzeba stworzyć tu słownik ofert z ich zdjęciami
+    #słownik ofert z zdjęciami ich firm
     logo_dict = {}
     for offer in offersList:
         company = get_object_or_404(Company, pk = offer.company_id)
-        path = str(company.logo)
-        if path.__contains__("Offers/static"):
-            path = path.replace("Offers/static/", "", 1)
-        logo_dict[offer] = path
+        logo_dict[offer] = company.logo
     return render(request, "Offers/jobs.html", {'offers_list': offersList, 'logo_dict': logo_dict})
 
 
@@ -330,10 +337,7 @@ def search(request):
     logo_dict = {}
     for offer in offers:
         company = get_object_or_404(Company, pk=offer.company_id)
-        path = str(company.logo)
-        if path.__contains__("Offers/static"):
-            path = path.replace("Offers/static/", "", 1)
-        logo_dict[offer] = path
+        logo_dict[offer] = company.logo
 
     context = {
         'offers2': offers,

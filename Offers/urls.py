@@ -2,6 +2,9 @@ from django.urls import path
 from django.contrib.auth.decorators import login_required
 from . import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path("", views.home, name='home'),
     path("register/", views.user_register, name='register'),
@@ -20,8 +23,7 @@ urlpatterns = [
     path('addoffer/', login_required(views.addoffer), name='addoffer'),
     path('application-delete/<int:id>', views.delete_application, name='application_delete'),
     path('offer-delete/<int:id>', views.delete_offer, name='offer_delete'),
-    path('addoffer/', login_required(views.addoffer), name='addoffer'),
     path('jobs/search/', views.search, name='search'),
     path('jobs/search/job-details/<int:offer_id>/', views.job_details, name='job-details'),
     path('jobs/search/job-details/<int:offer_id>/apply-for-job', views.applyForJob, name='apply-for-job')
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
