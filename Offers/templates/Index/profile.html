@@ -25,9 +25,15 @@
     <section>
       <div class="container">
         <div class="text-center">
-
-            <br>
-            <br>
+                    <br>
+                            <div class="image-thumb">
+                            {% if company.logo %}
+                                <img src="{{ company.logo.url }}" style="max-width:440px; max-height:300px" alt="No logo">
+                            {% else %}
+                                <p>You have not added a logo.</p>
+                            {% endif %}
+                            </div>
+                            <br>
             <h3 style="color:#ed563b">Overview: </h3>
             <br>
              <div class="row">
@@ -39,9 +45,6 @@
 
                         <div class="col-sm-6">
                             <h4 style="color:#ed563b">Company: </h4>
-
-                                <img src="{{ company.logo.url }}" alt="No logo">
-
 
                         </div>
 

@@ -2,7 +2,7 @@ import json
 import urllib
 import urllib.parse
 import urllib.request
-
+import os
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites import requests
 from django.shortcuts import render, redirect, get_object_or_404
@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
+from Django_Portal_Pracy.settings import MEDIA_ROOT
 
 import Offers
 from Django_Portal_Pracy import settings
@@ -182,6 +183,11 @@ def edit_company(request, *args, **kwargs):
     if request.method == "POST":
         form = CreateCompanyForm(request.POST, request.FILES, instance=instance)
         if form.is_valid():
+            logo = instance.logo
+            if request.FILES:
+                #TODO usunac stare logo
+                delete_logo(logo)
+                logo = request.FILES['logo']
             instance.company_name  = form.cleaned_data['company_name']
             instance.city          = form.cleaned_data['city']
             instance.street        = form.cleaned_data['street']
@@ -190,7 +196,7 @@ def edit_company(request, *args, **kwargs):
             instance.suite_number  = form.cleaned_data['suite_number']
             instance.email         = form.cleaned_data['email']
             instance.social_links  = form.cleaned_data['social_links']
-            instance.logo          = form.cleaned_data['logo']
+            instance.logo          = logo
             instance.phone         = form.cleaned_data['phone']
             instance.save(update_fields=['company_name',
                                          'city',
@@ -261,14 +267,11 @@ def applyForJob(request, *args, **kwargs):
 
 def jobs(request):
     offersList = Offer.objects.all()
-    #trzeba stworzyć tu słownik ofert z ich zdjęciami
+    #słownik ofert z zdjęciami ich firm
     logo_dict = {}
     for offer in offersList:
         company = get_object_or_404(Company, pk = offer.company_id)
-        path = str(company.logo)
-        if path.__contains__("Offers/static"):
-            path = path.replace("Offers/static/", "", 1)
-        logo_dict[offer] = path
+        logo_dict[offer] = company.logo
     return render(request, "Offers/jobs.html", {'offers_list': offersList, 'logo_dict': logo_dict})
 
 
@@ -289,6 +292,20 @@ def delete_offer(request, id):
     ob.delete()
     return redirect('company_profile')
 
+def delete_logo(logo):
+    if logo:
+        if logo.file:
+            if os.path.isfile(os.path.join(MEDIA_ROOT,'logo', logo.name)):
+                os.remove(os.path.join(MEDIA_ROOT,'logo', logo.name))
+            else:
+                print('pod tą ścieżką nie ma pliku')
+                print(logo.path)
+                print(logo.name)
+                print(os.path.join(MEDIA_ROOT,'logo', logo.name))
+        else:
+            print('logo nie jest plikiem')
+    else:
+        print('logo jest puste')
 
 def is_valid_query(param):
     return param != '' and param is not None
@@ -329,10 +346,7 @@ def search(request):
     logo_dict = {}
     for offer in offers:
         company = get_object_or_404(Company, pk=offer.company_id)
-        path = str(company.logo)
-        if path.__contains__("Offers/static"):
-            path = path.replace("Offers/static/", "", 1)
-        logo_dict[offer] = path
+        logo_dict[offer] = company.logo
 
     context = {
         'offers2': offers,
