@@ -19,7 +19,7 @@ from django.core.paginator import Paginator
 import Offers
 from Django_Portal_Pracy import settings
 from .models import Offer, Company, Application
-from .forms import CreateUserForm, CreateOfferForm, CreateCompanyForm, CreateApplicationForm
+from .forms import CreateUserForm, CreateOfferForm, CreateCompanyForm, CreateApplicationForm,UpdateUserForm
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -82,6 +82,8 @@ def user_register(request):
                     return redirect('register')
 
                 return redirect('register_company')
+            else:
+                messages.error(request, 'The data entered is incorrect')
 
         else:
             form = CreateUserForm()  # to ta z polem emaila
@@ -89,6 +91,27 @@ def user_register(request):
         form = CreateUserForm()  # to ta z polem emaila
         context = {'form': form}
         return render(request, 'registration/register.html', context)
+
+def edit_user(request):
+    instance = request.user
+    if request.method == 'POST':
+        form = UpdateUserForm(request.POST, instance=instance)
+        if form.is_valid():
+            instance.username = form.cleaned_data.get('username')
+            instance.set_password(form.cleaned_data.get('password'))
+            instance.email = form.cleaned_data.get('email')
+            instance.save(update_fields=['username','password','email'])
+
+            user = authenticate(username=instance.username, password=instance.password)
+            login(request, user)
+
+            return redirect('profile')
+    else:
+        form = UpdateUserForm(instance = instance)
+
+    context = {'form': form}
+    return render(request, 'Index/edit_user.html', context)
+
 
 
 def home(request):
@@ -189,12 +212,9 @@ def edit_company(request, *args, **kwargs):
         logo = instance.logo
         if request.FILES:
             if logo:
-                print(os.path.join(MEDIA_ROOT, logo.name))
                 os.remove(os.path.join(MEDIA_ROOT, logo.name))
         form = CreateCompanyForm(request.POST, request.FILES, instance=instance)
         if form.is_valid():
-
-                # delete_logo(logo)
             logo = request.FILES['logo']
             instance.company_name  = form.cleaned_data['company_name']
             instance.city          = form.cleaned_data['city']
@@ -217,8 +237,6 @@ def edit_company(request, *args, **kwargs):
                                          'logo',
                                          'phone'])
 
-
-            #instance.update(name=request.POST.get.cleaned_data['company_name'])
             return redirect('profile')
     else:
         form = CreateCompanyForm(instance=instance)

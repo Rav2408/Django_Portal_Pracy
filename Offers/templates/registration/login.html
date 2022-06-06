@@ -12,14 +12,23 @@
         <div class="video-overlay header-text">
             <div class="caption">
                 {% if form.errors %}
-                  <p>Nieprawidłowe dane</p>
+                  <p>Username or password is incorrect!</p>
                   {% endif %}
 
                   {% if next %}
-                  <p>Brak dostępu</p>
+                  <p>Access denied!</p>
                   {% endif %}
 
-                  <form class="login" method="post" action="{% url 'login' %}">
+                  <form method="post" style ="background: #212529AB;
+                                              height: 200px;
+                                              width: 400px;
+                                              margin: auto;
+                                              border: 1px solid #000000;
+                                              border-radius: 25px;
+                                              opacity: 1;
+                                              padding-top: 30px;"
+                        action="{% url 'login' %}">
+
                       {% csrf_token %}
 
                       <p>Username: {{ form.username }}</p>
