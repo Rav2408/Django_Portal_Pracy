@@ -299,7 +299,8 @@ def applyForJob(request, *args, **kwargs):
             else:
                 messages.error(request, 'Invalid reCAPTCHA. Please try again.')
                 form = CreateApplicationForm()
-
+        else:
+            messages.error(request, 'Invalid CV file')
     form = CreateApplicationForm()
     context = {'form': form, 'offer_id': kwargs['offer_id']}
     return render(request, "Offers/apply-for-job.html", context)

@@ -78,6 +78,18 @@ class CreateCompanyForm(forms.ModelForm):
             'logo',
             'phone'
         ]
+    def __init__(self, *args, **kwargs):
+        super(CreateCompanyForm, self).__init__(*args, **kwargs)
+        self.fields['company_name'].widget.attrs['placeholder'] = 'Company name'
+        self.fields['city'].widget.attrs['placeholder'] = 'City'
+        self.fields['street'].widget.attrs['placeholder'] = 'Street'
+        self.fields['street_number'].widget.attrs['placeholder'] = 'Street number'
+        self.fields['postcode'].widget.attrs['placeholder'] = 'Postcode'
+        self.fields['suite_number'].widget.attrs['placeholder'] = 'Apartment number'
+        self.fields['email'].widget.attrs['placeholder'] = 'E-mail'
+        self.fields['social_links'].widget.attrs['placeholder'] = 'Website address'
+        self.fields['phone'].widget.attrs['placeholder'] = 'Phone number'
+
 
 
 class CreateApplicationForm(forms.ModelForm):
@@ -86,3 +98,9 @@ class CreateApplicationForm(forms.ModelForm):
         exclude = ['offer']
         feedback = forms.CharField(widget=forms.Textarea, required=True)
         captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox, required=True)
+    def __init__(self, *args, **kwargs):
+        super(CreateApplicationForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs['placeholder'] = 'First name'
+        self.fields['last_name'].widget.attrs['placeholder'] = 'Last name'
+        self.fields['email'].widget.attrs['placeholder'] = 'E-Mail'
+        self.fields['reason'].widget.attrs['placeholder'] = 'Additional information'

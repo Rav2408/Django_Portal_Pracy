@@ -22,7 +22,15 @@
                   </ul>
                 {% endif %}
 
-                  <form id="user_register" method="post" action="{% url 'edit_user' %}">
+                  <form id="user_register" method="post" action="{% url 'edit_user' %}" style="
+                                              background: #212529AB;
+                                              height: 270px;
+                                              width: 350px;
+                                              margin: auto;
+                                              border: 1px solid #000000;
+                                              border-radius: 25px;
+                                              opacity: 1;
+                                              padding-top: 30px;">
                       {% csrf_token %}
 
                         {% if form.errors %}

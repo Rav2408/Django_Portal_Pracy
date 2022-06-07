@@ -28,16 +28,26 @@
     <!-- ***** Features Item Start ***** -->
     <section>
         <div class="text-center">
-            <br>
-            <br>
-
-            {% if messages %}
+        {% if messages %}
                   <ul class="messages" >
                       {% for message in messages %}
                       <li class="{{message.tags}}"> {{message}}</li>
                       {% endfor %}
                   </ul>
             {% endif %}
+        </div>
+        <div class="text-center" style="background: #212529AB;
+                                              height: 790px;
+                                              width: 450px;
+                                              margin: auto;
+                                              border: 1px solid #000000;
+                                              border-radius: 25px;
+                                              opacity: 1;
+                                              padding-top: 10px;
+                                              margin-top: 15px; ">
+            <br>
+            <br>
+
 
             <!-- FORMY DJANGO DO TWORZENIA OFERTY -->
             <form method="post" enctype="multipart/form-data" action="{% url 'apply-for-job' offer_id %}">
@@ -50,19 +60,19 @@
                   {% endif %}
 
 
-              <p>{{form.first_name.label}}
+              <p>
               {{form.first_name}}</p>
                 <br>
-              <p>{{form.last_name.label}}
+              <p>
               {{form.last_name}}</p>
                 <br>
-              <p>{{form.email.label}}
+              <p>
               {{form.email}}</p>
                 <br>
-                <p>{{form.cv.label}}
-              {{form.cv}}</p>
+                <p>Upload CV:</p>
+              <p>{{form.cv}}</p>
                 <br>
-                     <p>{{form.reason.label}}
+                     <p>
               {{form.reason}}</p>
                 <br>
 

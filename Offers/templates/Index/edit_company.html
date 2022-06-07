@@ -22,7 +22,15 @@
 
     <!-- ***** Features Item Start ***** -->
     <section>
-        <div class="text-center">
+        <div class="text-center" style="background: #212529AB;
+                                              height: 790px;
+                                              width: 450px;
+                                              margin: auto;
+                                              border: 1px solid #000000;
+                                              border-radius: 25px;
+                                              opacity: 1;
+                                              padding-top: 10px;
+                                              margin-top: 15px; ">
             <br>
             <br>
 
@@ -45,35 +53,37 @@
                   <p>{{form.errors}}</p>
                   {% endif %}
 
-             <p>{{form.company_name.label}}
+             <p>
               {{form.company_name}}</p>
                 <br>
-              <p>{{form.city.label}}
+              <p>
               {{form.city}}</p>
                 <br>
-                <p>{{form.street.label}}
+                <p>
               {{form.street}}</p>
                 <br>
-                <p>{{form.street_number.label}}
+                <p>
               {{form.street_number}}</p>
                 <br>
-                <p>{{form.postcode.label}}
-              {{form.postcode}}</p>
-                <br>
-                <p>{{form.suite_number.label}}
+                <p>
               {{form.suite_number}}</p>
+                 <br>
+                <p>
+              {{form.postcode}}</p>
+
                 <br>
-                <p>{{form.email.label}}
+                <p>
               {{form.email}}</p>
                 <br>
-                <p>{{form.phone.label}}
+                <p>
               {{form.phone}}</p>
                 <br>
-                <p>{{form.social_links.label}}
+                <p>
               {{form.social_links}}</p>
                 <br>
-                <p>{{form.logo.label}}
-              {{form.logo}}</p>
+                <p>Logo:</p>
+
+              <p>{{form.logo}}</p>
                 <br>
 
                <p><input type="submit" class="main-button"  value="Update"></p>
