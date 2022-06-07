@@ -39,14 +39,14 @@
                          <div>
                               <label>
                                   <span>Min. </span>
-                                   <input type="number" name="min_pay_html" >
+                                   <input type="number" name="min_pay_html" placeholder="{{ min_pay }}" >
                               </label>
                          </div>
 
                          <div>
                               <label>
                                   <span>Max. </span>
-                                   <input type="number" name="max_pay_html">
+                                   <input type="number" name="max_pay_html" placeholder="{{max_pay}}">
                               </label>
                          </div>
 
@@ -57,7 +57,7 @@
                               <label>
 
                                    <span><h5 style="margin-bottom: 15px">Position</h5> </span>
-                                   <input type="text" name="position_html">
+                                   <input type="text" name="position_html" placeholder="{{position}}">
 
 
                               </label>
@@ -66,7 +66,7 @@
                          <div>
                               <label>
                                   <span><h5 style="margin-bottom: 15px">Company</h5></span>
-                                   <input type="text" name="company_html">
+                                   <input type="text" name="company_html" placeholder="{{company}}">
 
                               </label>
                          </div>
@@ -76,7 +76,7 @@
                               <label>
 
                                   <span><h5 style="margin-bottom: 15px">Location</h5> </span>
-                                   <input type="text" name="location_html">
+                                   <input type="text" name="location_html" placeholder="{{location}}">
 
 
                               </label>
@@ -87,7 +87,11 @@
                               <label>
 
                                   <span><h5 style="margin-bottom: 15px">Remote</h5> </span>
-                                   <input type="checkbox" name="remote_html">
+                                    {% if remote %}
+                                     <input type="checkbox" name="remote_html"  checked="checked" >
+                                    {% else %}
+                                     <input type="checkbox" name="remote_html" >
+                                    {% endif %}
 
 
                               </label>
@@ -97,7 +101,6 @@
                         <p>&nbsp;</p>
                         <div class="main-button">
                             <button type="submit" class="btn btn-primary">Search</button>
-                            <!-- <a href="{% url 'search' %}">Search</a> -->
                         </div>
                     </form>
                     

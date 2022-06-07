@@ -15,7 +15,7 @@ class Company(models.Model):
     suite_number = models.IntegerField(blank=True, null=True)
     email = models.EmailField('email', blank=False)
     social_links = models.URLField(null=True)
-    logo = models.ImageField(upload_to="logo/", null=True, blank=True, default=None)
+    logo = models.ImageField(upload_to="logo/", validators=[file_size], null=True, blank=True, default=None)
     phone = models.CharField('phone', max_length=20, blank=False, default=None)
 
     def __str__(self):
