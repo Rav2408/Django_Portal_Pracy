@@ -145,10 +145,6 @@ def company_profile(request):
                                                           'application_list': application_list})
 
 
-# def przekaż_aplikacje_na_dana_oferte():
-#     ret
-
-
 def addoffer(request):
     if request.user.is_authenticated:
         if request.method == "POST":

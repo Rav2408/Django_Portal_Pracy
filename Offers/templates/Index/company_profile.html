@@ -64,7 +64,7 @@
                                     {% for app in application_list %}
                                         {% if app.offer.id == offer.id %}
                                             <div class="{{offer.id}}" style="display: none;">
-                                                <h6>{{ app.first_name }} {{ app.last_name }} {{app.email}} <a href="{{app.cv.url}}" download> Download CV </a></h6>
+                                                <h6>{{ app.first_name }} {{ app.last_name }} {{app.email}} <a href="{{ app.cv.url }}" target="_blank"> Download CV </a></h6>
                                                     <h7>
                                                         <p style="color:black;">{{app.reason}}</p>
                                                     <form action="{% url 'application_delete' id=app.id %}" method="post">
