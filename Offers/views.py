@@ -387,6 +387,7 @@ def search(request):
     context = {
         'result': offers,
         'logo_dict': logo_dict
+
     }
 
     return render(request, 'Offers/search.html', context)

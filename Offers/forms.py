@@ -50,9 +50,6 @@ class UpdateUserForm(forms.ModelForm):
         self.fields['password'].widget.attrs['value'] = ''
 
 
-
-
-
 class CreateOfferForm(forms.ModelForm):
     class Meta:
         model = Offer
@@ -87,3 +84,5 @@ class CreateApplicationForm(forms.ModelForm):
     class Meta:
         model = Application
         exclude = ['offer']
+        feedback = forms.CharField(widget=forms.Textarea, required=True)
+        captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox, required=True)
