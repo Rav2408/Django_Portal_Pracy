@@ -1,13 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django_resized import ResizedImageField
-from PIL import Image
-
-
-# ctrl + alt + shift + l
-# Create your models here.
+from .validators import validate_file_extension, file_size
 from django.db.models import DO_NOTHING
-from django.utils.safestring import mark_safe
+
 
 
 class Company(models.Model):
@@ -66,11 +61,11 @@ class Offer(models.Model):
 
 
 class Application(models.Model):
-    offer = models.ForeignKey(Offer, on_delete=DO_NOTHING)
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
     first_name = models.CharField(('first name'), max_length=30, blank=False, default=None)
     last_name = models.CharField(('last name'), max_length=30, blank=False, default=None)
     email = models.EmailField('email', blank=True, default=None)
-    cv = models.FileField(upload_to='uploads/', default=None)
+    cv = models.FileField(upload_to='uploads/', validators=[validate_file_extension, file_size], default=None)
     reason = models.TextField('reason', max_length=2000, blank=True, null=True)
 
     def __str__(self):
