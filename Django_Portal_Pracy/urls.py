@@ -23,3 +23,10 @@ urlpatterns = [
     path('accounts/', include(urls)),
     path('admin/', admin.site.urls),
 ]
+
+
+handler404 = 'Offers.views.error_404'
+handler403 = 'Offers.views.error_404'
+handler400 = 'Offers.views.error_404'
+handler504 = 'Offers.views.error_404'
+

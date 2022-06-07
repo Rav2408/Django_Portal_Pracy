@@ -27,3 +27,4 @@ urlpatterns = [
     path('jobs/search/job-details/<int:offer_id>/', views.job_details, name='job-details'),
     path('jobs/search/job-details/<int:offer_id>/apply-for-job', views.applyForJob, name='apply-for-job')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

@@ -392,3 +392,8 @@ def search(request):
     context['logo_dict'] = logo_dict
 
     return render(request, 'Offers/search.html', context)
+
+def error_404(request, exception):
+    data = {}
+    return render(request, 'Index/error.html', data)
+

@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5a^&z@d=951@cdcix4sgfjsq4r%cr1drprn8ihx823e_r@rxna'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # RECAPTCHA
 RECAPTCHA_PUBLIC_KEY = '6LczTeEfAAAAANM3rsBQ63TRXKhcJwHOT0skIhhY'
