@@ -1,0 +1,49 @@
+{% extends 'Index/base.html' %}
+{% load static %}
+{% block head %}
+{% endblock %}
+{% block body %}
+
+</script>
+    <!-- ***** Main Banner Area Start ***** -->
+    <div class="main-banner" id="top">
+        <video autoplay muted loop id="bg-video">
+            <source src="{% static 'images/video.mp4' %}" type="video/mp4" />
+        </video>
+        <div class="video-overlay header-text">
+            <div class="caption" style="align-content: center;">
+
+
+                {% if messages %}
+                  <ul class="messages" >
+                      {% for message in messages %}
+                      <li class="{{message.tags}}"> {{message}}</li>
+                      {% endfor %}
+                  </ul>
+                {% endif %}
+
+                  <form id="user_register" method="post" action="{% url 'edit_user' %}">
+                      {% csrf_token %}
+
+                        {% if form.errors %}
+                  <p>{{form.errors}}</p>
+                  {% endif %}
+
+                     <p>{{form.username}}</p>
+                        <br>
+                      <p>{{form.email}}</p>
+                        <br>
+                      <p>{{form.password}}</p>
+                        <br>
+
+
+                       <p><input type="submit" class="btn btn-primary" value="Update"></p>
+                      <input type="hidden" name="next" value="{{ next }}">
+
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Main Banner Area End ***** -->
+{% endblock %}

@@ -19,6 +19,7 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('register_company/', login_required(views.registerCompany), name='register_company'),
     path('edit_company/', login_required(views.edit_company), name='edit_company'),
+    path('edit_user/', login_required(views.edit_user), name='edit_user'),
     path('company_profile/edit_offer/<int:id>/', login_required(views.edit_offer), name='edit_offer'),
     path('addoffer/', login_required(views.addoffer), name='addoffer'),
     path('application-delete/<int:id>', views.delete_application, name='application_delete'),
