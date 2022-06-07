@@ -119,12 +119,8 @@ def home(request):
     return render(request, "Index/index.html", {})
 
 
-def about(request):
-    return render(request, "Index/about.html", {})
-
-
-def contact(request):
-    return render(request, "Index/contact.html", {})
+def error(request):
+    return render(request, "Index/error.html", {})
 
 
 def profile(request):
