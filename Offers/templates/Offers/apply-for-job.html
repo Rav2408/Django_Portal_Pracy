@@ -3,6 +3,11 @@
 {% block head %}
 {% endblock %}
 {% block body %}
+
+<!-- reCAPTCHA API -->
+<script src='https://www.google.com/recaptcha/api.js?render={{6LczTeEfAAAAANM3rsBQ63TRXKhcJwHOT0skIhhY}}'> </script>
+
+
     <section class="section section-bg" id="call-to-action" style="background-image: url({% static 'images/about-fullscreen-1-1920x700.jpg' %})">
         <div class="container">
             <div class="row">
@@ -25,6 +30,15 @@
         <div class="text-center">
             <br>
             <br>
+
+            {% if messages %}
+                  <ul class="messages" >
+                      {% for message in messages %}
+                      <li class="{{message.tags}}"> {{message}}</li>
+                      {% endfor %}
+                  </ul>
+            {% endif %}
+
             <!-- FORMY DJANGO DO TWORZENIA OFERTY -->
             <form method="post" enctype="multipart/form-data" action="{% url 'apply-for-job' offer_id %}">
                 <h2>Fill the form:</h2>
@@ -52,6 +66,9 @@
               {{form.reason}}</p>
                 <br>
 
+                <div style="padding-left: 47px" class="g-recaptcha" data-sitekey="6LczTeEfAAAAANM3rsBQ63TRXKhcJwHOT0skIhhY" ></div>
+                      <!--<button type="submit" class="btn btn-primary" >Register</button>-->
+                <br>
 
                <p><input type="submit" class="main-button"  value="Send your application"></p>
               <input type="hidden" name="next" value="{{ next }}">

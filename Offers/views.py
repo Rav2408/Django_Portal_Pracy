@@ -19,7 +19,7 @@ from django.core.paginator import Paginator
 import Offers
 from Django_Portal_Pracy import settings
 from .models import Offer, Company, Application
-from .forms import CreateUserForm, CreateOfferForm, CreateCompanyForm, CreateApplicationForm,UpdateUserForm
+from .forms import CreateUserForm, CreateOfferForm, CreateCompanyForm, CreateApplicationForm, UpdateUserForm
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -83,7 +83,8 @@ def user_register(request):
 
                 return redirect('register_company')
             else:
-                messages.error(request, 'The data entered is incorrect')
+                messages.error(request, 'The data entered is incorrect. '
+                                        'Make sure that the password is at least 8 characters long')
 
         else:
             form = CreateUserForm()  # to ta z polem emaila
@@ -91,6 +92,7 @@ def user_register(request):
         form = CreateUserForm()  # to ta z polem emaila
         context = {'form': form}
         return render(request, 'registration/register.html', context)
+
 
 def edit_user(request):
     instance = request.user
@@ -100,18 +102,17 @@ def edit_user(request):
             instance.username = form.cleaned_data.get('username')
             instance.set_password(form.cleaned_data.get('password'))
             instance.email = form.cleaned_data.get('email')
-            instance.save(update_fields=['username','password','email'])
+            instance.save(update_fields=['username', 'password', 'email'])
 
             user = authenticate(username=instance.username, password=instance.password)
             login(request, user)
 
             return redirect('profile')
     else:
-        form = UpdateUserForm(instance = instance)
+        form = UpdateUserForm(instance=instance)
 
     context = {'form': form}
     return render(request, 'Index/edit_user.html', context)
-
 
 
 def home(request):
@@ -128,7 +129,7 @@ def contact(request):
 
 def profile(request):
     company = get_object_or_404(Company, user=request.user.pk)
-    user = user=request.user
+    user = user = request.user
 
     return render(request, 'Index/profile.html', {'company': company, 'user': user})
 
@@ -144,8 +145,10 @@ def company_profile(request):
             application_list.append(app)
         application_count[i.id] = Application.objects.filter(offer_id=i.id).count()
     return render(request, 'Index/company_profile.html', {'company': company, 'offers_lists': offer_list,
-                                                  'application_count': application_count,
-                                                  'application_list': application_list})
+                                                          'application_count': application_count,
+                                                          'application_list': application_list})
+
+
 # def przekaż_aplikacje_na_dana_oferte():
 #     ret
 
@@ -175,7 +178,6 @@ def addoffer(request):
 
 
 def registerCompany(request, *args, **kwargs):
-
     if request.method == "POST":
         form = CreateCompanyForm(request.POST, request.FILES)
         messages.success(request, 'Account was created!')
@@ -206,7 +208,6 @@ def registerCompany(request, *args, **kwargs):
 
 
 def edit_company(request, *args, **kwargs):
-
     instance = Company.objects.get(user=request.user.pk)
     if request.method == "POST":
         logo = instance.logo
@@ -216,16 +217,16 @@ def edit_company(request, *args, **kwargs):
         form = CreateCompanyForm(request.POST, request.FILES, instance=instance)
         if form.is_valid():
             logo = request.FILES['logo']
-            instance.company_name  = form.cleaned_data['company_name']
-            instance.city          = form.cleaned_data['city']
-            instance.street        = form.cleaned_data['street']
+            instance.company_name = form.cleaned_data['company_name']
+            instance.city = form.cleaned_data['city']
+            instance.street = form.cleaned_data['street']
             instance.street_number = form.cleaned_data['street_number']
-            instance.postcode      = form.cleaned_data['postcode']
-            instance.suite_number  = form.cleaned_data['suite_number']
-            instance.email         = form.cleaned_data['email']
-            instance.social_links  = form.cleaned_data['social_links']
-            instance.logo          = logo
-            instance.phone         = form.cleaned_data['phone']
+            instance.postcode = form.cleaned_data['postcode']
+            instance.suite_number = form.cleaned_data['suite_number']
+            instance.email = form.cleaned_data['email']
+            instance.social_links = form.cleaned_data['social_links']
+            instance.logo = logo
+            instance.phone = form.cleaned_data['phone']
             instance.save(update_fields=['company_name',
                                          'city',
                                          'street',
@@ -250,12 +251,12 @@ def edit_offer(request, id):
     if request.method == "POST":
         form = CreateOfferForm(request.POST, instance=instance)
         if form.is_valid():
-            instance.position     = form.cleaned_data['position']
-            instance.min_salary   = form.cleaned_data['min_salary']
-            instance.max_salary   = form.cleaned_data['max_salary']
-            instance.remote       = form.cleaned_data['remote']
-            instance.location     = form.cleaned_data['location']
-            instance.description  = form.cleaned_data['description']
+            instance.position = form.cleaned_data['position']
+            instance.min_salary = form.cleaned_data['min_salary']
+            instance.max_salary = form.cleaned_data['max_salary']
+            instance.remote = form.cleaned_data['remote']
+            instance.location = form.cleaned_data['location']
+            instance.description = form.cleaned_data['description']
             instance.save(update_fields=['position',
                                          'min_salary',
                                          'max_salary',
@@ -275,19 +276,34 @@ def applyForJob(request, *args, **kwargs):
         form = CreateApplicationForm(request.POST, request.FILES)
         offer_id = kwargs['offer_id']
         if form.is_valid():
-            application = Application(first_name=form.cleaned_data['first_name'],
-                                      last_name=form.cleaned_data['last_name'],
-                                      email=form.cleaned_data['email'],
-                                      cv=request.FILES['cv'],
-                                      reason=form.cleaned_data['reason'],
-                                      offer=get_object_or_404(Offer, pk=offer_id)
-                                      )
-            application.save()
-            return redirect('home')
 
-    else:
-        form = CreateApplicationForm()
+            ''' reCAPTCHA validation '''
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.RECAPTCHA_PRIVATE_KEY,
+                'response': recaptcha_response
+            }
+            data = urllib.parse.urlencode(values).encode()
+            req = urllib.request.Request(url, data=data)
+            response = urllib.request.urlopen(req)
+            result = json.loads(response.read().decode())
 
+            if result['success']:
+                application = Application(first_name=form.cleaned_data['first_name'],
+                                          last_name=form.cleaned_data['last_name'],
+                                          email=form.cleaned_data['email'],
+                                          cv=request.FILES['cv'],
+                                          reason=form.cleaned_data['reason'],
+                                          offer=get_object_or_404(Offer, pk=offer_id)
+                                          )
+                application.save()
+                return redirect('home')
+            else:
+                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+                form = CreateApplicationForm()
+
+    form = CreateApplicationForm()
     context = {'form': form, 'offer_id': kwargs['offer_id']}
     return render(request, "Offers/apply-for-job.html", context)
 
@@ -297,15 +313,15 @@ def jobs(request):
 
     pagination = Paginator(Offer.objects.all(), 10)
     page = request.GET.get('page')
-    j = pagination.get_page(page) # j jak jobs
+    j = pagination.get_page(page)  # j jak jobs
 
-    #słownik ofert z zdjęciami ich firm
+    # słownik ofert z zdjęciami ich firm
     logo_dict = {}
     for offer in offersList:
-        company = get_object_or_404(Company, pk = offer.company_id)
+        company = get_object_or_404(Company, pk=offer.company_id)
         logo_dict[offer] = company.logo
     return render(request, "Offers/jobs.html", {'offers_list': offersList,
-                                                'offers_list2' : j,
+                                                'offers_list2': j,
                                                 'logo_dict': logo_dict})
 
 
@@ -355,7 +371,7 @@ def search(request):
 
     if is_valid_query(company):
         offers = offers.filter(company__company_name__icontains=company)
-                                    # foreign key - field - lookup
+        # foreign key - field - lookup
 
     if is_valid_query(location):
         offers = offers.filter(location__icontains=location)
@@ -374,4 +390,3 @@ def search(request):
     }
 
     return render(request, 'Offers/search.html', context)
-
