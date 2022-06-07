@@ -355,35 +355,39 @@ def search(request):
     location = request.GET.get('location_html')
 
     remote = request.GET.get('remote_html')
+    context = {}
 
     if is_valid_query(min_pay):
         offers = offers.filter(min_salary__gte=min_pay)  # gte - greater than or equal
+        context['min_pay'] = min_pay
 
     if is_valid_query(max_pay):
         offers = offers.filter(max_salary__lte=max_pay)  # lower than or equal
+        context['max_pay'] = max_pay
 
     if is_valid_query(position):
         offers = offers.filter(position__icontains=position)
+        context['position'] = position
 
     if is_valid_query(company):
         offers = offers.filter(company__company_name__icontains=company)
         # foreign key - field - lookup
+        context['company'] = company
 
     if is_valid_query(location):
         offers = offers.filter(location__icontains=location)
+        context['location'] = location
 
     if remote == 'on':
         offers = offers.filter(remote=True)
+        context['remote'] = remote
 
     logo_dict = {}
     for offer in offers:
         company = get_object_or_404(Company, pk=offer.company_id)
         logo_dict[offer] = company.logo
 
-    context = {
-        'result': offers,
-        'logo_dict': logo_dict
-
-    }
+    context['result'] = offers
+    context['logo_dict'] = logo_dict
 
     return render(request, 'Offers/search.html', context)
