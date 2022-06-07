@@ -209,7 +209,8 @@ def edit_company(request, *args, **kwargs):
         logo = instance.logo
         if request.FILES:
             if logo:
-                os.remove(os.path.join(MEDIA_ROOT, logo.name))
+                if os.path.exists(os.path.join(MEDIA_ROOT, logo.name)):
+                    os.remove(os.path.join(MEDIA_ROOT, logo.name))
         form = CreateCompanyForm(request.POST, request.FILES, instance=instance)
         if form.is_valid():
             logo = request.FILES['logo']
