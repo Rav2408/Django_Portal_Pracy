@@ -26,7 +26,15 @@
             <br>
             <br>
             <!-- FORMY DJANGO DO TWORZENIA OFERTY -->
-            <form method="post" action="{% url 'addoffer' %}">
+            <form method="post" action="{% url 'addoffer' %}" style="
+                                              background: #212529AB;
+                                              height: 650px;
+                                              width: 400px;
+                                              margin: auto;
+                                              border: 1px solid #000000;
+                                              border-radius: 25px;
+                                              opacity: 1;
+                                              padding-top: 30px;>
                 <h2>Add new offer</h2>
                 <br>
               {% csrf_token %}
