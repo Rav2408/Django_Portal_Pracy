@@ -41,13 +41,16 @@ class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
+        widgets = {
+            'password': forms.TextInput(attrs={'type': 'password'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(UpdateUserForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['value'] = kwargs['instance'].username
         self.fields['email'].widget.attrs['value'] = kwargs['instance'].email
-        self.fields['password'].widget.attrs['placeholder'] = 'Password'
         self.fields['password'].widget.attrs['value'] = ''
+        self.fields['password'].widget.attrs['placeholder'] = 'Password'
 
 
 class CreateOfferForm(forms.ModelForm):
